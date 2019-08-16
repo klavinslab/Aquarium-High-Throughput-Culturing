@@ -130,7 +130,8 @@ module KlavinsLabFlowCytometerSoftware
   
   # Guides technician to apply settings to the selected wells. Wells are selected by sampleType (different sampleTypes require different settings)
   def apply_settings(instrument:)
-    if instrument.experimental_item.object_type.name.downcase.include? 'beads'
+      log_info 'instrument.experimental_item.object_type.name.downcase', instrument.experimental_item.object_type.name.downcase
+    if instrument.experimental_item.object_type.name.downcase.include? 'bead'
       sample_type_name = instrument.experimental_item.sample.sample_type.name.to_sym
     else
       sample_type_name = collection_from(instrument.experimental_item).matrix.flatten.uniq.reject {|sid| sid == -1 }.map {|sid| s = Sample.find(sid); s.sample_type.name }.uniq.first.to_sym
