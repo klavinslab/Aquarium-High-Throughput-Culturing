@@ -1,6 +1,6 @@
 # Aquarium High Throughput Culturing, version 0.0.1
 
-his workflow automates the execution of a high throughput microbial culturing experiment. This assesment will phenotypically characterize the genetically modified culture under the user defined experimental conditions. It will generate a virtual 96 well plate with sorted representations of experimental microbial cultures. The sorting algorithm groups replicates by input item and induction conditions, with the consideration of manual pipetting. [[Download](Aquarium-High-Throughput-Culturing.aq)] [[Github Repo](https://github.com/klavinslab/Aquarium-High-Throughput-Culturing)]
+This workflow automates the execution of a high throughput microbial culturing experiment. This assesment will phenotypically characterize the genetically modified culture under the user defined experimental conditions. It will generate a virtual 96 well plate with sorted representations of experimental microbial cultures. The sorting algorithm groups replicates by input item and induction conditions, with the consideration of manual pipetting. [[Download](Aquarium-High-Throughput-Culturing.aq)] [[Github Repo](https://github.com/klavinslab/Aquarium-High-Throughput-Culturing)]
 
 &copy; University of Washington
 
