@@ -52,8 +52,8 @@ class Protocol
   MEASUREMENT_TYPE = 'Calibration'
   
   # Access class variables via Protocol.your_class_method
-  @@materials_list = []
-  def self.materials_list; @@materials_list; end
+  @materials_list = []
+  def self.materials_list; @materials_list; end
   
   def main # Typically one calibration op per Plan
     pr = intro
