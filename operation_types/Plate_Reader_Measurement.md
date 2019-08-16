@@ -59,8 +59,8 @@ class Protocol
   WHEN_TO_MEASURE  = "When to Measure? (24hr)"
   
   # Access class variables via Protocol.your_class_method
-  @@materials_list = []
-  def self.materials_list; @@materials_list; end
+  @materials_list = []
+  def self.materials_list; @materials_list; end
   
   # TODO: Get time series measurements online
   def main
