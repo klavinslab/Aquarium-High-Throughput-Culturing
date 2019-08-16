@@ -65,8 +65,8 @@ class Protocol
   ALLOWABLE_DILUTANT_SAMPLETYPES = ['Yeast Strain', 'Plasmid', 'E coli strain'] # sample types that will be transferred to new plate
   
   # Access class variables via Protocol.your_class_method
-  @@materials_list = []
-  def self.materials_list; @@materials_list; end
+  @materials_list = []
+  def self.materials_list; @materials_list; end
   
   def intro
     show do
