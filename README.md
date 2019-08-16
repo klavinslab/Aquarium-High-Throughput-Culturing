@@ -7,7 +7,7 @@ This Aquarium workflow is comprised of operations that abstract and automate the
 To get started with planning your own High Throughput Culturing experiment, vist the GitHub Repository below.
 [Jellyfish](https://github.com/EribertoLopez/Jellyfish "High Throughput Culturing Planning")
 
-## Excution
+## Execution
 
 Scripts automate the planning of 'Define Culture Conditions' operations which take JSON parsable parameters 
 ![High Throughput Culturing Plan](/docs/_images/plan_example.png?raw=true "High Throughput Culturing Plan")
