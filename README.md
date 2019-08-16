@@ -5,7 +5,7 @@ This Aquarium workflow is comprised of operations that abstract and automate the
 ## Planning
 
 To get started with planning your own High Throughput Culturing experiment, vist the GitHub Repository below.
-[Jellyfish](https://github.com/EribertoLopez/Jellyfish "High Throughput Culturing Planning")
+[github.com/EribertoLopez/Jellyfish](https://github.com/EribertoLopez/Jellyfish "High Throughput Culturing Planning")
 
 ## Execution
 
