@@ -49,8 +49,8 @@ class Protocol
   OUTPUT = "Diluted Beads"
   
   # Access class variables via Protocol.your_class_method
-  @@materials_list = []
-  def self.materials_list; @@materials_list; end
+  @materials_list = []
+  def self.materials_list; @materials_list; end
     
   def intro
     flow_cytometer = FlowCytometer.new()
