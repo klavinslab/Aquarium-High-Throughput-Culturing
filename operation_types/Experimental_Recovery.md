@@ -14,6 +14,7 @@ This protocol will guide you on how to recover your growing cultures and prepare
 
 - **Culture Plate** [P] (Array) 
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "Eppendorf 96 Deepwell Plate")'>Eppendorf 96 Deepwell Plate</a>
+  - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "24 Unit Disorganized Collection")'>24 Unit Disorganized Collection</a>
 
 ### Parameters
 
@@ -25,6 +26,7 @@ This protocol will guide you on how to recover your growing cultures and prepare
 
 - **Diluted Plate** [P] (Array) 
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "Eppendorf 96 Deepwell Plate")'>Eppendorf 96 Deepwell Plate</a>
+  - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "24 Unit Disorganized Collection")'>24 Unit Disorganized Collection</a>
 
 ### Precondition <a href='#' id='precondition'>[hide]</a>
 ```ruby
