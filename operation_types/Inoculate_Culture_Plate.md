@@ -16,6 +16,7 @@ The culturing could be very complex with additional inducers and reagents requir
   - <a href='#' onclick='easy_select("Sample Types", "Yeast Strain")'>Yeast Strain</a> / <a href='#' onclick='easy_select("Containers", "Yeast Glycerol Stock")'>Yeast Glycerol Stock</a>
   - <a href='#' onclick='easy_select("Sample Types", "Plasmid")'>Plasmid</a> / <a href='#' onclick='easy_select("Containers", "E coli Plate of Plasmid")'>E coli Plate of Plasmid</a>
   - <a href='#' onclick='easy_select("Sample Types", "E coli strain")'>E coli strain</a> / <a href='#' onclick='easy_select("Containers", "E coli Glycerol Stock")'>E coli Glycerol Stock</a>
+  - <a href='#' onclick='easy_select("Sample Types", "Yeast Strain")'>Yeast Strain</a> / <a href='#' onclick='easy_select("Containers", "Yeast Overnight Suspension")'>Yeast Overnight Suspension</a>
 
 ### Parameters
 
@@ -27,6 +28,7 @@ The culturing could be very complex with additional inducers and reagents requir
 
 - **Culture Plate** [P] (Array) 
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "Eppendorf 96 Deepwell Plate")'>Eppendorf 96 Deepwell Plate</a>
+  - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "24 Unit Disorganized Collection")'>24 Unit Disorganized Collection</a>
 
 ### Precondition <a href='#' id='precondition'>[hide]</a>
 ```ruby
