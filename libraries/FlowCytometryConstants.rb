@@ -5,9 +5,9 @@ SAMPLE_UPLOAD_KEY = 'SAMPLE_UPLOAD'.freeze
 BEAD_UPLOAD_KEY = 'BEAD_UPLOAD'.freeze
 
 # Flow Cytometry instance constants
-LAB_NAME = 'Klavins Lab'.to_sym
-YOUR_LAB_NAME = 'YOUR_LAB_HERE'.to_sym # Change LAB_NAME to use different constants
-FLOW_CYTOMETER_TYPE = {'Klavins Lab':'BD Accuri C6'.to_sym,'YOUR_LAB_HERE':'YOUR_FLOW_CYTOMETER_TYPE'.to_sym}
+KLAVINS_LAB = 'Klavins Lab'.to_sym
+HAASE_LAB = 'Haase Lab'.to_sym
+FLOW_CYTOMETER_TYPE = {'Klavins Lab':'BD Accuri C6'.to_sym,'Haase Lab':'Attune'.to_sym}
 MY_FLOW_CYTOMETER_PROPERTIES = {
   'Klavins Lab': {
     'BD Accuri C6': {
@@ -38,6 +38,46 @@ MY_FLOW_CYTOMETER_PROPERTIES = {
         saving_directory: 'FIND_OUT_THE_PATH/FCS_Exports'
       },
     valid_containers: ['96 Well Flat Bottom (black)'],
+    },
+  },
+  'YOUR_LAB_HERE':{
+    'YOUR_PLATE_READER_TYPE':{ 
+      software_steps: 'properties', 
+      valid_containers: ['96 Well Flat Bottom (black)'], 
+    },
+    saving_directory: 'SAVING_DIRECTORY'
+  },
+  'Haase Lab': {
+    'Attune': {
+      software_properties: {
+        sample_type_settings: {
+          'Yeast Strain': {'Run Limits': '30,000 events', 'Run Limits (Max Volume)': '250ul', 'Fluidics': 'Fast', 'Set Threshold': 'FSC-H less than 400,000'},
+          'Plasmid': {'Run Limits': '30,000 events', 'Run Limits (Max Volume)': '250ul', 'Fluidics': 'Fast', 'Set Threshold': 'FSC-H less than 80,000'},
+          'Beads': {'Figure out': 'Calibration limits','Run Limits': '30,000 events', 'Run Limits (Max Volume)': '250ul', 'Fluidics': 'Fast', 'Set Threshold': 'FSC-H less than 80,000'}
+        },
+        plate_type_hash: {
+          '96 Well Flat Bottom (black)': 'Flat bottom plate',
+          '24 Deep Well Plate': '24 Deep Well Plate',
+          '24 Unit Disorganized Collection': 'Disorganized Collection',
+          'Diluted beads': '24-Well Tube Rack'
+        },
+        images: {
+          open_software: "Actions/Yeast_Gates/flowCytometryImages/open_FC_software_icon.png", #file
+          select_plate_type: "Actions/Yeast_Gates/flowCytometryImages/select_plate_type.png",   # Remove not needed
+          apply_settings: "Actions/Yeast_Gates/flowCytometryImages/flow_cytometry_settings.png",    #Pic of side bar
+          read_plate: "Actions/Yeast_Gates/flowCytometryImages/measure_plate_autorun.png",  # Start Up button
+          export_new_data: "Actions/FlowCytometry/saveFCS_menu_cropped.png",    # Right click?  Remove probably
+          new_export_directory: "Actions/FlowCytometry/saveFCS_dirname_cropped.png" # Remove probably
+        },
+        measurement_type_templates: {
+          "cleaning": {dtype: 'could be the three cleaning files to record contamination over time!'},
+          "Yeast": {dtype: "paratmers for yeast measurements"},
+          "Ecoli": {},
+          "Calibration": {}
+        },
+        saving_directory: 'FIND_OUT_THE_PATH/FCS_Exports'
+      },
+    valid_containers: ['96 Well Flat Bottom (black)', '24 Deep Well Plate', '24 Unit Disorganized Collection'],
     },
   },
   'YOUR_LAB_HERE':{
