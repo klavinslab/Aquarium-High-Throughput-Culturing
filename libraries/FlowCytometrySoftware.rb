@@ -1,6 +1,11 @@
 # Eriberto Lopez
 # elopez3@uw.edu
 # 08/15/19
+#
+#Update:
+#Cannon Mallory
+#malloc3@uw.edu
+#02/04/2020
 
 require 'date'
 
@@ -51,9 +56,8 @@ module AqUpload
   end
 end # module AqUpload
 
-module KlavinsLabFlowCytometerSoftware
-  include AqUpload
-  
+module StandardCytometrySoftware
+
   # Groups sample type wells together to create an rc_list of a given sampletype in a collection.
   #
   # @params instrument [class] is a class instance of an instrument
@@ -78,7 +82,53 @@ module KlavinsLabFlowCytometerSoftware
     end
     return sample_type_rc_list_hash
   end
-  
+
+  def get_measurement_filename(measurement_item:, timepoint:)
+    mt = measurement_type.to_s.gsub(' ', '') 
+    "jid_#{jid}_item_#{measurement_item.id}_t#{timepoint.strftime "%H%M"}_#{timepoint.strftime "%m%d%Y"}".gsub(' ', '_')
+  end
+
+
+  # Generates an experimental measurement filename, which is the name of the workspace created on the Accuri Flow Cytometer
+  def get_experiment_filename(instrument:)
+    timepoint = Time.now
+    return "jid_#{jid}_experiment_#{instrument.measurement_item}_#{timepoint.strftime "%m%d%Y"}".gsub(' ', '')
+  end
+
+
+  # Guides technician on how to open software if it is not already open
+  def open_software(instrument)
+    if (!instrument.software_open)
+      go_to_computer(instrument)
+      show do
+        title "Open #{instrument.type} #{instrument.instrument_type} Software"
+        separator
+        note "Click on the icon shown below to open the #{instrument.instrument_type} software:"
+        image instrument.software[:images][:open_software]
+      end
+      instrument.software_open = true
+    else
+      log_info 'the software is already open!'.upcase
+    end
+  end
+
+  # Directs techician to which lab and flow cytometer computer to setup workspace
+  def go_to_computer(instrument)
+    show do
+      title "Go to the #{LAB_NAME} #{instrument.type} #{instrument.instrument_type}"
+      separator
+      warning "<b>The next steps should be done on the #{instrument.instrument_type} computer</b>.".upcase
+    end
+  end
+
+
+
+
+  # Creates a dummy 24 well tube rack to display on screen (deletes down stream)
+  def get_tube_rack
+    produce new_collection '24 Deep Well Plate'
+  end
+
   # Guides technician to select plate type in the flow cytometry software
   def select_plate_type(instrument)
     show do
@@ -88,6 +138,11 @@ module KlavinsLabFlowCytometerSoftware
       image instrument.software.fetch(:images).fetch(:select_plate_type)
     end
   end
+end # module StandarCytometrySoftware
+
+module BDAccuri
+  include AqUpload
+  include StandardCytometrySoftware
   
   # Guides technician through the steps in setting up the BD Acurri software workspace for culture measurements
   def setup_instrument_software(instrument)
@@ -106,11 +161,7 @@ module KlavinsLabFlowCytometerSoftware
       end
     end
   end
-  
-  # Creates a dummy 24 well tube rack to display on screen (deletes down stream)
-  def get_tube_rack
-    produce new_collection '24 Deep Well Plate'
-  end
+
   
   # Guides technician through the steps in setting up the BD Acurri software workspace for calibration measurement
   def setup_instrument_calibration(instrument)
@@ -198,37 +249,8 @@ module KlavinsLabFlowCytometerSoftware
     }
     return measurement_data
   end
-  
-  # Directs techician to which lab and flow cytometer computer to setup workspace
-  def go_to_computer(instrument)
-    show do
-      title "Go to the #{LAB_NAME} #{instrument.type} #{instrument.instrument_type}"
-      separator
-      warning "<b>The next steps should be done on the #{instrument.instrument_type} computer</b>.".upcase
-    end
-  end
-  
-  # Guides technician on how to open software if it is not already open
-  def open_software(instrument)
-    if (!instrument.software_open)
-      go_to_computer(instrument)
-      show do
-        title "Open #{instrument.type} #{instrument.instrument_type} Software"
-        separator
-        note "Click on the icon shown below to open the #{instrument.instrument_type} software:"
-        image instrument.software[:images][:open_software]
-      end
-      instrument.software_open = true
-    else
-      log_info 'the software is already open!'.upcase
-    end
-  end
-  
-  # Generates an experimental measurement filename, which is the name of the workspace created on the Accuri Flow Cytometer
-  def get_experiment_filename(instrument:)
-    timepoint = Time.now
-    return "jid_#{jid}_experiment_#{instrument.measurement_item}_#{timepoint.strftime "%m%d%Y"}".gsub(' ', '')
-  end
+
+
   
   # Guides technician through measuring the diluted calibration beads
   def read_calibration(instrument: instrument)
@@ -280,8 +302,177 @@ module KlavinsLabFlowCytometerSoftware
     return timepoint
   end
   
-  def get_measurement_filename(measurement_item:, timepoint:)
-    mt = measurement_type.to_s.gsub(' ', '') 
-    "jid_#{jid}_item_#{measurement_item.id}_t#{timepoint.strftime "%H%M"}_#{timepoint.strftime "%m%d%Y"}".gsub(' ', '_')
-  end
 end # module KlavinsLabFlowCytometrySoftware
+
+
+
+#These are the ATUNE specific pages.  Please look at current methods for examples
+#Fill in as needed (I tried my best but I don't have the Atune with me)
+module Attune
+  include AqUpload
+  include StandardCytometrySoftware
+  
+  # Guides technician through the steps in setting up instrument software workspace for culture measurements
+  def setup_instrument_software(instrument)
+    open_software(instrument)
+    select_plate_type(instrument)
+    get_sample_type_rc_list_hash(instrument).each do |sample_type_name, rc_list|
+      if ALLOWABLE_FC_SAMPLETYPES.include? sample_type_name
+        #This may be the same.  On the BD Accurie 
+        show do
+          title "Select Wells #go to FlowCytometrySoftware library Attune module to customize this step"
+          separator
+          note "Select the following wells for #{sample_type_name} cultures found in #{instrument.measurement_item.object_type.name} #{instrument.measurement_item}."
+          table highlight_alpha_rc(collection_from(instrument.measurement_item), rc_list) {|r,c| "#"}
+          note 'After checking the wells on the screen continue to the next step.'
+        end
+        apply_settings(instrument: instrument)
+      end
+    end
+  end
+  
+  # Guides technician through the steps in setting up the instrument software workspace for calibration measurement
+  def setup_instrument_calibration(instrument)
+    open_software(instrument)
+    select_plate_type(instrument)
+    tube_rack = get_tube_rack 
+    show do
+      title "Select Wells #go to FlowCytometrySoftware library Attune module to customize this step"
+      separator
+      note "Select the following location of the optical particals #{instrument.measurement_item.object_type.name} #{instrument.measurement_item}."
+      table highlight_alpha_rc(tube_rack, [[0,0]]) {|r,c| "#"}
+      note 'After checking the wells on the screen continue to the next step.'
+    end
+    tube_rack.mark_as_deleted
+    apply_settings(instrument: instrument)
+  end
+  
+  # Guides technician to apply settings to the selected wells. Wells are selected by sampleType (different sampleTypes require different settings)
+  def apply_settings(instrument:)
+      log_info 'instrument.experimental_item.object_type.name.downcase', instrument.experimental_item.object_type.name.downcase
+    if instrument.experimental_item.object_type.name.downcase.include? 'bead'
+      sample_type_name = instrument.experimental_item.sample.sample_type.name.to_sym
+    else
+      sample_type_name = collection_from(instrument.experimental_item).matrix.flatten.uniq.reject {|sid| sid == -1 }.map {|sid| s = Sample.find(sid); s.sample_type.name }.uniq.first.to_sym
+    end
+    show do
+      title "Apply Settings #go to FlowCytometrySoftware library Attune module to customize this step"
+      separator
+      image instrument.software.fetch(:images).fetch(:apply_settings)
+      note "Apply the following settings to the wells you have selected"
+      note "<b>Make sure that the settings are as follows:</b>"
+      instrument.software.fetch(:sample_type_settings).fetch(sample_type_name).each {|setting, val| bullet "Set <b>#{setting}</b> to <b>#{val}</b>"}
+      check "Finally, click <b>Apply Settings</b>"
+      bullet "Save experimental measurement as <b>#{get_experiment_filename(instrument: instrument)}</b>"
+    end
+  end
+  
+  #Guides technician through software to export, save, and upload data to Aq
+  def export_save_and_upload_measurement_data(instrument:, timepoint:)
+    sw = instrument.software
+    day = timepoint.strftime "%m%d%Y"
+    hour = timepoint.strftime "%H%M"
+    # Export
+    fcs_exports = show do 
+      title "Export .fcs files #go to FlowCytometrySoftware library Attune module to customize this step"
+      separator
+      note 'Make sure that flow cytometer run is <b>DONE!</b>'
+      note 'Press <b>CLOSE RUN DISPLAY</b>'
+      note 'Select <b>File</b> => <b>Export ALL Samples as FCS...</b> (see below)'
+      image instrument.software.fetch(:images).fetch(:export_new_data)
+      note 'You will see a pop-up like below, record the directory ID #'
+      image instrument.software.fetch(:images).fetch(:new_export_directory)
+      get 'text', var: 'dirname', label: 'Enter the name of the export directory in Desktop/FCS Exports/'
+    end
+    # UPLOAD
+    if (!debug) 
+      attempt = 0
+      up_show, up_sym = {}, :file 
+      while (up_show[up_sym].nil?) || (attempt == 3) do
+        up_show, up_sym = upload_directory_show(saving_dir: sw[:saving_directory]+"/#{fcs_exports[:dirname]}")
+        attempt += 1
+      end
+      upload_array = get_upload_array_from_show(up_show: up_show, up_sym: up_sym)
+    else
+      log_info 'UPLOADS Array debug'
+      upload_array = [Upload.find(26482), Upload.find(26458)]
+    end
+    measurement_data = {
+      mitem: instrument.measurement_item,
+      day: day,
+      hour: hour,
+      uploads: upload_array
+    }
+    return measurement_data
+  end
+  
+  # Guides technician through measuring the diluted calibration beads
+  def read_calibration(instrument: instrument)
+    go_to_computer(instrument)
+    tube_rack = get_tube_rack
+    show do
+      title "Load #{instrument.measurement_item.object_type.name} #{instrument.measurement_item}"
+      note "#go to FlowCytometrySoftware library Attune module to customize this step"
+      separator
+      note "Click <b>Eject Plate</b>"
+      check "Open tube #{instrument.measurement_item} then, place the tube into the first well of the #{instrument.software.fetch(:plate_type_hash)[instrument.measurement_item.object_type.name.to_sym]}."  
+      bullet "Well A1 should be by the red sticker in the top left corner."
+      table highlight_alpha_rc(tube_rack, [[0,0]]) {|r,c| "#"}
+      check "Finally, load the #{instrument.measurement_item.object_type.name} and continue to the next step."
+    end
+    tube_rack.mark_as_deleted # Collection created for display, then deleted
+    show do 
+      title "Taking Measurements"
+      note "#go to FlowCytometrySoftware library Attune module to customize this step"
+      separator
+      note "Click <b>OPEN RUN DISPLAY</b>"
+      image instrument.software.fetch(:images).fetch(:read_plate)
+      note "Next, click <b>AUTORUN</b>"
+      note "Contiue on to the next step while #{instrument.type} #{instrument.instrument_type} is running..."
+    end
+    instrument.measurement_item.location = instrument.type.to_s
+    timepoint = Time.now
+    return timepoint
+  end
+  
+
+  # Guides technician through measuring the experimental culture plate
+  def read_plate(instrument:)
+    go_to_computer(instrument)
+    show do
+      title "Load #{instrument.measurement_item.object_type.name} #{instrument.measurement_item}"
+      note "#go to FlowCytometrySoftware library Attune module to customize this step"
+      separator
+      note "Click <b>Eject Plate</b>"
+      note "Be sure that the plate is in the correct orientation. Well A1 should be by the red sticker in the top left corner."
+      check "Finally, load the plate and continue to the next step."
+    end
+    show do 
+      title "Taking Measurements"
+      note "#go to FlowCytometrySoftware library Attune module to customize this step"
+      separator
+      note "Click <b>OPEN RUN DISPLAY</b>"
+      image instrument.software.fetch(:images).fetch(:read_plate)
+      note "Next, click <b>AUTORUN</b>"
+      note "Contiue on to the next step while #{instrument.type} #{instrument.instrument_type} is running..."
+    end
+    instrument.measurement_item.location = instrument.type.to_s
+    timepoint = Time.now
+    return timepoint
+  end
+  
+  # Guides techician to read the calibration sample, then export, save, and upload data to Aq
+  def take_calibration_and_upload_data(instrument:)
+    timepoint = read_calibration(instrument: instrument)
+    instrument.measurement_data = export_save_and_upload_measurement_data(instrument: instrument, timepoint: timepoint)
+  end
+
+  # Guides techician to read the culture plate, then export, save, and upload data to Aq
+  def take_measurement_and_upload_data(instrument:)
+    timepoint = read_plate(instrument: instrument)
+    instrument.measurement_data = export_save_and_upload_measurement_data(instrument: instrument, timepoint: timepoint)
+  end
+
+end # module HaaseLabAttune
+
+
