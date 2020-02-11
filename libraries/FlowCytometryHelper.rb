@@ -19,17 +19,31 @@ needs htc + "HighThroughputHelper"
 class FlowCytometer
   include InstrumentHelper
   attr_accessor :software_open
-  attr_reader :instrument_type, :type, :valid_containers, :software
+  attr_reader :instrument_type, :type, :valid_containers, :software, :lab_name
   def initialize()
+    @lab_name         = get_lab_name
     @instrument_type  = 'Flow Cytometer'.freeze
     @type             = get_my_flow_cytometer_type
     @valid_containers = valid_containers
     @software         = get_my_software_properties
     @software_open    = false
   end
+
+  #Checks what server AQ is being run on so it can decide what instruments are available to use
+  #Assumes that the BioFAB server will only be run in BIOFAB and no where else
+  def get_lab_name
+    aq_instance = Bioturk::Application.config.instance_name.upcase
+    if aq_instance == "UW BIOFAB"
+      return KLAVINS_LAB.tosym
+    elsif aq_instance == "DARPA_SD2"
+      return HAASE_LAB.to_sym
+    else #usually when its dockerized && Your Lab
+      return HAASE_LAB.to_sym       ##This is temporary.  Should have a check here saying
+    end
+  end
   
   def get_my_flow_cytometer_type
-    FLOW_CYTOMETER_TYPE[LAB_NAME]
+    FLOW_CYTOMETER_TYPE[lab_name.to_sym]
   end
 
   def valid_containers
@@ -37,7 +51,7 @@ class FlowCytometer
   end
   
   def get_my_flow_cytometer_properties_obj
-    MY_FLOW_CYTOMETER_PROPERTIES[LAB_NAME]
+    MY_FLOW_CYTOMETER_PROPERTIES[lab_name.to_sym]
   end
   
   def get_my_software_properties
@@ -54,6 +68,8 @@ class FlowCytometer
       ot_arr = ObjectType.find(experimental_item.map {|item| item.object_type_id}.uniq).map {|ot| ot.name}
       ot_arr.each {|otn| (valid_containers.include? otn) ? (valid_container = true) : (valid_container) }
       valid_container
+    elsif experimental_item.class == "NillClass"
+      raise "Your input plate is of class #{experimental_item.class} which means it was likley deleted"
     else
       raise "This type of #{experimental_item.class} object is not compatible with this instrument"
     end
@@ -82,15 +98,17 @@ module FlowCytometryHelper
     return flow_cytometer
   end
   
+
+  ##TODO This is where you can add new cytometers
   # Using the instance of class FlowCytometer, we can determine which software module to import
   def get_flow_cytometer_software(flow_cytometer:)
     case flow_cytometer.type
     when 'BD Accuri C6'.to_sym
-      Protocol.include(KlavinsLabFlowCytometerSoftware)
-    when 'YOUR_LABS_FLOW_CYTOMETER_MODULE'.to_sym
-      Protocol.include(YourSoftwareSteps)
+      Protocol.include(BDAccuri)
+    when 'Attune'.to_sym
+      Protocol.include(Attune)
     else
-      raise "the #{flow_cytometer.type} flow cytometer in the #{LAB_NAME} has no software steps associated to it, create a module with steps to use flow cytomter".upcase
+      raise "the #{flow_cytometer.type} flow cytometer in the #{lab_name} has no software steps associated to it, create a module with steps to use flow cytomter".upcase
     end
   end
   
@@ -138,8 +156,9 @@ module FlowCytometryHelper
     show do
       title "Transfer to Valid Container"
       separator
-      check "Gather empty #{to_collection.object_type.name} #{to_collection}"
-      check "Follow the table below to transfer only the shaded wells:"
+      note "Gather empty #{to_collection.object_type.name} #{to_collection}"
+      note "Follow the table below to transfer only the shaded wells:"
+      note "Transfer 200ul per well"
       bullet "<b>From</b> #{from_collection.object_type.name} #{from_collection}"
       bullet "<b>To</b> #{to_collection.object_type.name} #{to_collection}"
       table highlight_alpha_non_empty(to_collection) {|r, c| "#{display_coordinates[r][c]}" }
