@@ -50,14 +50,19 @@ module AssociationManagement
       @object = object
       @map = {}
 
+
+
       @object.associations.each do |datum|
         @map[datum[0]] =
           if @object.upload(datum[0]).nil?
             datum[1]
           else
             UploadAssoc.new(datum[1], @object.upload(datum[0]))
+            raise "here"
           end
       end
+
+      
 
       if object.is_a? Collection
         initialize_part_data
@@ -181,7 +186,9 @@ module AssociationManagement
     #                         for example, you might have the default part data, alongside a routing matrix
     def initialize_part_data(data_matrix = DATAMATRIX_KEY)
       raise "Invalid Method Call: cannot associate part data to an object that isn't a collection" unless @object.is_a?(Collection)
-      coll = collection_from(@object.id)
+      # TODO: fix the following so that can use the Base method
+      # coll = collection_from(@object.id)
+      coll = Collection.find(@object.id)
       @map[data_matrix] = Array.new(coll.dimensions[0]) { Array.new(coll.dimensions[1]) { {} } } if @map[data_matrix].nil?
     end
 
