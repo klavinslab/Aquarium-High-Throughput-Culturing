@@ -6,6 +6,7 @@ This operation takes in a culture plate collection applies a reagent, timestamps
 
 - **Culture Plate** [P] (Array) 
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "Eppendorf 96 Deepwell Plate")'>Eppendorf 96 Deepwell Plate</a>
+  - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "24 Unit Disorganized Collection")'>24 Unit Disorganized Collection</a>
 
 ### Parameters
 
@@ -16,6 +17,7 @@ This operation takes in a culture plate collection applies a reagent, timestamps
 
 - **Experimental Plate** [P] (Array) 
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "Eppendorf 96 Deepwell Plate")'>Eppendorf 96 Deepwell Plate</a>
+  - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "24 Unit Disorganized Collection")'>24 Unit Disorganized Collection</a>
 
 ### Precondition <a href='#' id='precondition'>[hide]</a>
 ```ruby
