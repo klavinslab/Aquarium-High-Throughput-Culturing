@@ -170,7 +170,7 @@ module HighThroughputHelper
     gather_materials(empty_containers: new_output_collections, transfer_required: false, new_materials: ["P1000 Multichannel Pipette", "Media Reservoir", "Aera Breathable Seals"], take_items: uniq_media_items)
     uniq_input_items.group_by {|item| item.object_type.name }.each do |ot_name, items|
       case ot_name
-      when 'Yeast Glycerol Stock', 'E coli Glycerol Stock'
+      when 'Yeast Glycerol Stock', 'E coli Glycerol Stock', 'Yeast Overnight Suspension'
         tubeNum_hash = prep_glycerol_stock_inoculants(inoculation_prep_hash: inoculation_prep_hash, input_item_hash: input_item_hash, input_media_hash: input_media_hash)
         inoculate_glycerol_stock_inoculates(inoculation_prep_hash: inoculation_prep_hash, tubeNum_hash: tubeNum_hash)
       when 'Yeast Plate', 'E coli Plate of Plasmid'
