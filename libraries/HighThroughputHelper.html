@@ -784,6 +784,16 @@ function mainFocus() {
   setTimeout(function() { $('#main').focus(); }, 10);
 }
 
+function navigationChange() {
+  // This works around the broken anchor navigation with the YARD template.
+  window.onpopstate = function() {
+    var hash = window.location.hash;
+    if (hash !== '' && $(hash)[0]) {
+      $(hash)[0].scrollIntoView();
+    }
+  };
+}
+
 $(document).ready(function() {
   navResizer();
   navExpander();
@@ -796,6 +806,7 @@ $(document).ready(function() {
   constantSummaryToggle();
   generateTOC();
   mainFocus();
+  navigationChange();
 });
 
 })();
@@ -997,8 +1008,7 @@ $(document).ready(function() {
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Format incomplete slices, to avoid class Matrix dimension errors when
-vertically stacking matricies.</p>
+<p>Format incomplete slices, to avoid class Matrix dimension errors when vertically stacking matricies.</p>
 </div></span>
   
 </li>
@@ -1046,8 +1056,7 @@ vertically stacking matricies.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Compare total number of moles in each culture, to sort each culture with
-the consideration of manual pipetting.</p>
+<p>Compare total number of moles in each culture, to sort each culture with the consideration of manual pipetting.</p>
 </div></span>
   
 </li>
@@ -1071,8 +1080,7 @@ the consideration of manual pipetting.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Sort replicate culture arrays by strain then by total moles of final
-concentration inducer.</p>
+<p>Sort replicate culture arrays by strain then by total moles of final concentration inducer.</p>
 </div></span>
   
 </li>
@@ -1432,8 +1440,7 @@ concentration inducer.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Format incomplete slices, to avoid class Matrix dimension errors when
-vertically stacking matricies</p>
+<p>Format incomplete slices, to avoid class Matrix dimension errors when vertically stacking matricies</p>
 
 
   </div>
@@ -1565,8 +1572,7 @@ vertically stacking matricies</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Compare total number of moles in each culture, to sort each culture with
-the consideration of manual pipetting</p>
+<p>Compare total number of moles in each culture, to sort each culture with the consideration of manual pipetting</p>
 
 
   </div>
@@ -1623,8 +1629,7 @@ the consideration of manual pipetting</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Sort replicate culture arrays by strain then by total moles of final
-concentration inducer</p>
+<p>Sort replicate culture arrays by strain then by total moles of final concentration inducer</p>
 
 
   </div>
@@ -1695,13 +1700,7 @@ concentration inducer</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Stack each matrix in the array vertically to fill matricies columwise.  For
-example, if you have a list of A, B, C replicates then, A would go into A1,
-B would go to B1, and C would go to C1. Furthermore, the next set of
-triplicates D would go to A2, E would go to B2, and F would go to C2.
-However, replicates will not be broken up, so a new stacked matrix will be
-created, which means a new collection will be used to avoid breaking up
-reps.</p>
+<p>Stack each matrix in the array vertically to fill matricies columwise.  For example, if you have a list of A, B, C replicates then, A would go into A1, B would go to B1, and C would go to C1. Furthermore, the next set of triplicates D would go to A2, E would go to B2, and F would go to C2. However, replicates will not be broken up, so a new stacked matrix will be created, which means a new collection will be used to avoid breaking up reps.</p>
 
 
   </div>
@@ -1949,8 +1948,7 @@ reps.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Addup total volume for a given component type found in a part_data matrix
-(a matrix of culture compostion part associations).</p>
+<p>Addup total volume for a given component type found in a part_data matrix (a matrix of culture compostion part associations).</p>
 </div></span>
   
 </li>
@@ -1998,8 +1996,7 @@ reps.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Generate a hash that groups [row, columen] coordinates by media type item
-and microbial sample item.</p>
+<p>Generate a hash that groups [row, columen] coordinates by media type item and microbial sample item.</p>
 </div></span>
   
 </li>
@@ -2069,9 +2066,7 @@ and microbial sample item.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Compute how much volume to transfer to reach a given dilution factor and
-also consider the volumes of the other culture components (ie: inducers,
-antibiotics, etc…).</p>
+<p>Compute how much volume to transfer to reach a given dilution factor and also consider the volumes of the other culture components (ie: inducers, antibiotics, etc…).</p>
 </div></span>
   
 </li>
@@ -2139,8 +2134,7 @@ antibiotics, etc…).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the location of the new output collections to the same incubator that
-its source plate came from.</p>
+<p>Set the location of the new output collections to the same incubator that its source plate came from.</p>
 </div></span>
   
 </li>
@@ -2164,8 +2158,7 @@ its source plate came from.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Guides tech through inoculting collection using Yeast Plates as the
-inoculum.</p>
+<p>Guides tech through inoculting collection using Yeast Plates as the inoculum.</p>
 </div></span>
   
 </li>
@@ -2259,8 +2252,7 @@ inoculum.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Allows for multiple key deeply nested <a href=":item">hash</a>[:<a
-href=":day">measurement]</a>[:hour] = val.</p>
+<p>Allows for multiple key deeply nested <a href=":item">hash</a>[:<a href=":day">measurement]</a>[:hour] = val.</p>
 </div></span>
   
 </li>
@@ -2284,8 +2276,7 @@ href=":day">measurement]</a>[:hour] = val.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Generate source &amp; destination associations for part provenenance
-reactor DARPA SD2.</p>
+<p>Generate source &amp; destination associations for part provenenance reactor DARPA SD2.</p>
 </div></span>
   
 </li>
@@ -2309,8 +2300,7 @@ reactor DARPA SD2.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Guides tech through labelling and resuspending glycerol stock sample into
-specified volume of media for inoculation.</p>
+<p>Guides tech through labelling and resuspending glycerol stock sample into specified volume of media for inoculation.</p>
 </div></span>
   
 </li>
@@ -2358,8 +2348,7 @@ specified volume of media for inoculation.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A method serches the culture component part associations and returns a
-matrix of values, base on the component type and attribute of component.</p>
+<p>A method serches the culture component part associations and returns a matrix of values, base on the component type and attribute of component.</p>
 </div></span>
   
 </li>
@@ -2383,8 +2372,7 @@ matrix of values, base on the component type and attribute of component.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Transfer every non empty well of a collection, keep culture composition
-association, and create new part provenance associations.</p>
+<p>Transfer every non empty well of a collection, keep culture composition association, and create new part provenance associations.</p>
 </div></span>
   
 </li>
@@ -2408,8 +2396,7 @@ association, and create new part provenance associations.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Only transfer part associations to avoid copying over global associations
-(things directly associated to the collection).</p>
+<p>Only transfer part associations to avoid copying over global associations (things directly associated to the collection).</p>
 </div></span>
   
 </li>
@@ -2661,8 +2648,7 @@ association, and create new part provenance associations.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Gather materials. label if they are empty containers, display if they are
-materials are equiptement, and take items that are represented in Aq</p>
+<p>Gather materials. label if they are empty containers, display if they are materials are equiptement, and take items that are represented in Aq</p>
 
 
   </div>
@@ -2729,8 +2715,7 @@ materials are equiptement, and take items that are represented in Aq</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Addup total volume for a given component type found in a part_data matrix
-(a matrix of culture compostion part associations)</p>
+<p>Addup total volume for a given component type found in a part_data matrix (a matrix of culture compostion part associations)</p>
 
 
   </div>
@@ -2844,9 +2829,7 @@ materials are equiptement, and take items that are represented in Aq</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Generate a hash that groups [row, columen] coordinates by media type item
-and microbial sample item.  Uses culture composition components associated
-to collection part items to generate data structure</p>
+<p>Generate a hash that groups [row, columen] coordinates by media type item and microbial sample item.  Uses culture composition components associated to collection part items to generate data structure</p>
 
 
   </div>
@@ -3010,9 +2993,7 @@ to collection part items to generate data structure</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Compute how much volume to transfer to reach a given dilution factor and
-also consider the volumes of the other culture components (ie: inducers,
-antibiotics, etc…)</p>
+<p>Compute how much volume to transfer to reach a given dilution factor and also consider the volumes of the other culture components (ie: inducers, antibiotics, etc…)</p>
 
 
   </div>
@@ -3137,8 +3118,7 @@ antibiotics, etc…)</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Set the location of the new output collections to the same incubator that
-its source plate came from.</p>
+<p>Set the location of the new output collections to the same incubator that its source plate came from.</p>
 
 
   </div>
@@ -3193,8 +3173,7 @@ its source plate came from.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Guides tech through inoculting collection using Yeast Plates as the
-inoculum. Each replicate is uses a single colony.</p>
+<p>Guides tech through inoculting collection using Yeast Plates as the inoculum. Each replicate is uses a single colony.</p>
 
 
   </div>
@@ -3283,9 +3262,7 @@ inoculum. Each replicate is uses a single colony.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Determines what method to use for collection inoculation. Different methods
-when using different input object types. ie: Yeast Glycerol Stock vs. Yeast
-Plate</p>
+<p>Determines what method to use for collection inoculation. Different methods when using different input object types. ie: Yeast Glycerol Stock vs. Yeast Plate</p>
 
 
   </div>
@@ -3338,7 +3315,7 @@ Plate</p>
   <span class='id identifier rubyid_gather_materials'>gather_materials</span><span class='lparen'>(</span><span class='label'>empty_containers:</span> <span class='id identifier rubyid_new_output_collections'>new_output_collections</span><span class='comma'>,</span> <span class='label'>transfer_required:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>new_materials:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>P1000 Multichannel Pipette</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Media Reservoir</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Aera Breathable Seals</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>take_items:</span> <span class='id identifier rubyid_uniq_media_items'>uniq_media_items</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_uniq_input_items'>uniq_input_items</span><span class='period'>.</span><span class='id identifier rubyid_group_by'>group_by</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_item'>item</span><span class='op'>|</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_object_type'>object_type</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ot_name'>ot_name</span><span class='comma'>,</span> <span class='id identifier rubyid_items'>items</span><span class='op'>|</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_ot_name'>ot_name</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Yeast Glycerol Stock</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>E coli Glycerol Stock</span><span class='tstring_end'>&#39;</span></span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Yeast Glycerol Stock</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>E coli Glycerol Stock</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Yeast Overnight Suspension</span><span class='tstring_end'>&#39;</span></span>
       <span class='id identifier rubyid_tubeNum_hash'>tubeNum_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_prep_glycerol_stock_inoculants'>prep_glycerol_stock_inoculants</span><span class='lparen'>(</span><span class='label'>inoculation_prep_hash:</span> <span class='id identifier rubyid_inoculation_prep_hash'>inoculation_prep_hash</span><span class='comma'>,</span> <span class='label'>input_item_hash:</span> <span class='id identifier rubyid_input_item_hash'>input_item_hash</span><span class='comma'>,</span> <span class='label'>input_media_hash:</span> <span class='id identifier rubyid_input_media_hash'>input_media_hash</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_inoculate_glycerol_stock_inoculates'>inoculate_glycerol_stock_inoculates</span><span class='lparen'>(</span><span class='label'>inoculation_prep_hash:</span> <span class='id identifier rubyid_inoculation_prep_hash'>inoculation_prep_hash</span><span class='comma'>,</span> <span class='label'>tubeNum_hash:</span> <span class='id identifier rubyid_tubeNum_hash'>tubeNum_hash</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Yeast Plate</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>E coli Plate of Plasmid</span><span class='tstring_end'>&#39;</span></span>
@@ -3481,8 +3458,7 @@ Plate</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Allows for multiple key deeply nested <a href=":item">hash</a>[:<a
-href=":day">measurement]</a>[:hour] = val</p>
+<p>Allows for multiple key deeply nested <a href=":item">hash</a>[:<a href=":day">measurement]</a>[:hour] = val</p>
 
 
   </div>
@@ -3523,8 +3499,7 @@ href=":day">measurement]</a>[:hour] = val</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Generate source &amp; destination associations for part provenenance
-reactor DARPA SD2</p>
+<p>Generate source &amp; destination associations for part provenenance reactor DARPA SD2</p>
 
 
   </div>
@@ -3595,8 +3570,7 @@ reactor DARPA SD2</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Guides tech through labelling and resuspending glycerol stock sample into
-specified volume of media for inoculation.</p>
+<p>Guides tech through labelling and resuspending glycerol stock sample into specified volume of media for inoculation.</p>
 
 
   </div>
@@ -3776,8 +3750,7 @@ specified volume of media for inoculation.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>A method serches the culture component part associations and returns a
-matrix of values, base on the component type and attribute of component</p>
+<p>A method serches the culture component part associations and returns a matrix of values, base on the component type and attribute of component</p>
 
 
   </div>
@@ -3820,8 +3793,7 @@ matrix of values, base on the component type and attribute of component</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Transfer every non empty well of a collection, keep culture composition
-association, and create new part provenance associations</p>
+<p>Transfer every non empty well of a collection, keep culture composition association, and create new part provenance associations</p>
 
 
   </div>
@@ -3866,8 +3838,7 @@ association, and create new part provenance associations</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Only transfer part associations to avoid copying over global associations
-(things directly associated to the collection)</p>
+<p>Only transfer part associations to avoid copying over global associations (things directly associated to the collection)</p>
 
 
   </div>
