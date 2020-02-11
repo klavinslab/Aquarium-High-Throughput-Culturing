@@ -285,6 +285,18 @@ var config = {
             },
           
             {
+              name: '24 Deep Well Plate',
+              path: 'object_types/24_Deep_Well_Plate'  + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: '24 Unit Disorganized Collection',
+              path: 'object_types/24_Unit_Disorganized_Collection'  + '.md',
+              type: "local-md"
+            },
+          
+            {
               name: '800 mL Liquid',
               path: 'object_types/800_mL_Liquid'  + '.md',
               type: "local-md"
