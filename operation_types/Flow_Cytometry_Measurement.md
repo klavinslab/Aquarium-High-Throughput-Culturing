@@ -19,6 +19,8 @@ In this protocol, you will prepare the instrument workspace and characterize you
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "Eppendorf 96 Deepwell Plate")'>Eppendorf 96 Deepwell Plate</a>
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "96 U-bottom Well Plate")'>96 U-bottom Well Plate</a>
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "96 Well Flat Bottom (black)")'>96 Well Flat Bottom (black)</a>
+  - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "24 Deep Well Plate")'>24 Deep Well Plate</a>
+  - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "24 Unit Disorganized Collection")'>24 Unit Disorganized Collection</a>
 
 ### Parameters
 
@@ -32,6 +34,7 @@ In this protocol, you will prepare the instrument workspace and characterize you
 - **Measurement Plate** [P]  
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "96 U-bottom Well Plate")'>96 U-bottom Well Plate</a>
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "96 Well Flat Bottom (black)")'>96 Well Flat Bottom (black)</a>
+  - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "24 Unit Disorganized Collection")'>24 Unit Disorganized Collection</a>
 
 ### Precondition <a href='#' id='precondition'>[hide]</a>
 ```ruby
