@@ -784,6 +784,16 @@ function mainFocus() {
   setTimeout(function() { $('#main').focus(); }, 10);
 }
 
+function navigationChange() {
+  // This works around the broken anchor navigation with the YARD template.
+  window.onpopstate = function() {
+    var hash = window.location.hash;
+    if (hash !== '' && $(hash)[0]) {
+      $(hash)[0].scrollIntoView();
+    }
+  };
+}
+
 $(document).ready(function() {
   navResizer();
   navExpander();
@@ -796,6 +806,7 @@ $(document).ready(function() {
   constantSummaryToggle();
   generateTOC();
   mainFocus();
+  navigationChange();
 });
 
 })();
@@ -1043,9 +1054,7 @@ $(document).ready(function() {
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A way to filter Struct objects (depriciated) ie:
-catalog(pr.measurement_data, by: :item) #=&gt; sorting symbol should be
-known by user.</p>
+<p>A way to filter Struct objects (depriciated) ie: catalog(pr.measurement_data, by: :item) #=&gt; sorting symbol should be known by user.</p>
 </div></span>
   
 </li>
@@ -1359,9 +1368,7 @@ known by user.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>TODO: Make compataible with both statistics and matrix uploads Takes in a
-csv upload file, extracts the information on it into a datamatrix object
-which is returned.</p>
+<p>TODO: Make compataible with both statistics and matrix uploads Takes in a csv upload file, extracts the information on it into a datamatrix object which is returned.</p>
 </div></span>
   
 </li>
@@ -1409,8 +1416,7 @@ which is returned.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>could extend a module with common class variables needed in protocol
-writing.</p>
+<p>could extend a module with common class variables needed in protocol writing.</p>
 </div></span>
   
 </li>
@@ -1434,8 +1440,7 @@ writing.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>If a dilution is required then find how much media an culture are required
-given the working volume of the container.</p>
+<p>If a dilution is required then find how much media an culture are required given the working volume of the container.</p>
 </div></span>
   
 </li>
@@ -1613,9 +1618,7 @@ given the working volume of the container.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>when PlateReaderHelper is included into class Protocol we can use the class
-method .include()  to include the required software module dynamically to
-the Protocol.</p>
+<p>when PlateReaderHelper is included into class Protocol we can use the class method .include()  to include the required software module dynamically to the Protocol.</p>
 </div></span>
   
 </li>
@@ -1771,8 +1774,7 @@ the Protocol.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Allows for multiple key deeply nested <a href=":item">hash</a>[:<a
-href=":day">measurement]</a>[:hour] = val.</p>
+<p>Allows for multiple key deeply nested <a href=":item">hash</a>[:<a href=":day">measurement]</a>[:hour] = val.</p>
 </div></span>
   
 </li>
@@ -1862,8 +1864,7 @@ href=":day">measurement]</a>[:hour] = val.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>TODO: Error handling when processing and associating upload data Associate
-to the valid container and correct the data.</p>
+<p>TODO: Error handling when processing and associating upload data Associate to the valid container and correct the data.</p>
 </div></span>
   
 </li>
@@ -2041,8 +2042,7 @@ to the valid container and correct the data.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>TODO: Make opts hash allow usner to use to transfer sample matrix by some
-offset index.</p>
+<p>TODO: Make opts hash allow usner to use to transfer sample matrix by some offset index.</p>
 </div></span>
   
 </li>
@@ -2346,9 +2346,7 @@ offset index.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>A way to filter Struct objects (depriciated) ie:
-catalog(pr.measurement_data, by: :item) #=&gt; sorting symbol should be
-known by user. It is a instance method created in a Struct class</p>
+<p>A way to filter Struct objects (depriciated) ie: catalog(pr.measurement_data, by: :item) #=&gt; sorting symbol should be known by user. It is a instance method created in a Struct class</p>
 
 
   </div>
@@ -2955,10 +2953,7 @@ known by user. It is a instance method created in a Struct class</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>TODO: Make compataible with both statistics and matrix uploads Takes in a
-csv upload file, extracts the information on it into a datamatrix object
-which is returned. Specificly tuned to the output file of the biotek plate
-reader.</p>
+<p>TODO: Make compataible with both statistics and matrix uploads Takes in a csv upload file, extracts the information on it into a datamatrix object which is returned. Specificly tuned to the output file of the biotek plate reader.</p>
 
 
   </div>
@@ -3083,8 +3078,7 @@ reader.</p>
       
         &mdash;
         <div class='inline'>
-<p>can be a single alpha_coordinate or a list of alpha_coordinate strings ie:
-&#39;A1&#39; or [&#39;A1&#39;,&#39;H7&#39;]</p>
+<p>can be a single alpha_coordinate or a list of alpha_coordinate strings ie: &#39;A1&#39; or [&#39;A1&#39;,&#39;H7&#39;]</p>
 </div>
       
     </li>
@@ -3147,8 +3141,7 @@ reader.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>could extend a module with common class variables needed in protocol
-writing</p>
+<p>could extend a module with common class variables needed in protocol writing</p>
 
 
   </div>
@@ -3215,8 +3208,7 @@ writing</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>If a dilution is required then find how much media an culture are required
-given the working volume of the container.</p>
+<p>If a dilution is required then find how much media an culture are required given the working volume of the container.</p>
 
 
   </div>
@@ -3487,9 +3479,7 @@ given the working volume of the container.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>when PlateReaderHelper is included into class Protocol we can use the class
-method .include()  to include the required software module dynamically to
-the Protocol.  Which allows us to use methods found in the software module.</p>
+<p>when PlateReaderHelper is included into class Protocol we can use the class method .include()  to include the required software module dynamically to the Protocol.  Which allows us to use methods found in the software module.</p>
 
 
   </div>
@@ -3776,8 +3766,7 @@ the Protocol.  Which allows us to use methods found in the software module.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Allows for multiple key deeply nested <a href=":item">hash</a>[:<a
-href=":day">measurement]</a>[:hour] = val</p>
+<p>Allows for multiple key deeply nested <a href=":item">hash</a>[:<a href=":day">measurement]</a>[:hour] = val</p>
 
 
   </div>
@@ -3962,8 +3951,7 @@ href=":day">measurement]</a>[:hour] = val</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>TODO: Error handling when processing and associating upload data Associate
-to the valid container and correct the data.</p>
+<p>TODO: Error handling when processing and associating upload data Associate to the valid container and correct the data.</p>
 
 
   </div>
@@ -4426,8 +4414,7 @@ to the valid container and correct the data.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>TODO: Make opts hash allow usner to use to transfer sample matrix by some
-offset index</p>
+<p>TODO: Make opts hash allow usner to use to transfer sample matrix by some offset index</p>
 
 
   </div>
