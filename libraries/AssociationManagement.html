@@ -784,6 +784,16 @@ function mainFocus() {
   setTimeout(function() { $('#main').focus(); }, 10);
 }
 
+function navigationChange() {
+  // This works around the broken anchor navigation with the YARD template.
+  window.onpopstate = function() {
+    var hash = window.location.hash;
+    if (hash !== '' && $(hash)[0]) {
+      $(hash)[0].scrollIntoView();
+    }
+  };
+}
+
 $(document).ready(function() {
   navResizer();
   navExpander();
@@ -796,6 +806,7 @@ $(document).ready(function() {
   constantSummaryToggle();
   generateTOC();
   mainFocus();
+  navigationChange();
 });
 
 })();
@@ -885,8 +896,7 @@ $(document).ready(function() {
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Module with methods and classes that seek to help with associating data to,
-and retrieving data from, items, operations, plans, collections, and parts.</p>
+<p>Module with methods and classes that seek to help with associating data to, and retrieving data from, items, operations, plans, collections, and parts.</p>
 
 
   </div>
@@ -990,8 +1000,7 @@ and retrieving data from, items, operations, plans, collections, and parts.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Associates a key and value to the associations hash of the given object.
-Replaces an existing association for the given key.</p>
+<p>Associates a key and value to the associations hash of the given object. Replaces an existing association for the given key.</p>
 
 <p>A part may be represented as a part item, or a collection and coordinate.</p>
 
@@ -1146,8 +1155,7 @@ Replaces an existing association for the given key.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the associated value from the associations hash of a given object.
-If an association doesn&#39;t exist for the key, returns nil.</p>
+<p>Returns the associated value from the associations hash of a given object. If an association doesn&#39;t exist for the key, returns nil.</p>
 
 
   </div>
@@ -1318,14 +1326,7 @@ If an association doesn&#39;t exist for the key, returns nil.</p>
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Utilizes the part-data matrix of collections to store information about the
-history of parts of a collection. PartProvenance initializes and relies on
-two fields of every part-data slot: `source` and `destination`. `source`
-will store a list of item ids (with rc index if applicable), of all the
-ingredients used to make this part, and destination will use the same data
-format to record all of the places this part was used in. Item-Item
-provenance can technically be recorded as well with this library, but it
-will not be necessary.</p>
+<p>Utilizes the part-data matrix of collections to store information about the history of parts of a collection. PartProvenance initializes and relies on two fields of every part-data slot: `source` and `destination`. `source` will store a list of item ids (with rc index if applicable), of all the ingredients used to make this part, and destination will use the same data format to record all of the places this part was used in. Item-Item provenance can technically be recorded as well with this library, but it will not be necessary.</p>
 
 
   </div>
@@ -1387,8 +1388,7 @@ will not be necessary.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Record an entry to the provenance data between two parts, or a part and an
-item.</p>
+<p>Record an entry to the provenance data between two parts, or a part and an item.</p>
 </div></span>
   
 </li>
@@ -1412,8 +1412,7 @@ item.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>For the given associatable target object, appends or concatenates the given
-datum_to_append to the association at `key` for that object.</p>
+<p>For the given associatable target object, appends or concatenates the given datum_to_append to the association at `key` for that object.</p>
 </div></span>
   
 </li>
@@ -1437,8 +1436,7 @@ datum_to_append to the association at `key` for that object.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Retrieves a list of destinations that were made using the given part of a
-Collection.</p>
+<p>Retrieves a list of destinations that were made using the given part of a Collection.</p>
 </div></span>
   
 </li>
@@ -1462,8 +1460,7 @@ Collection.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Given an item, or a part of a collection, serializes it into a simple tag
-which can be used to retrieve it.</p>
+<p>Given an item, or a part of a collection, serializes it into a simple tag which can be used to retrieve it.</p>
 </div></span>
   
 </li>
@@ -1487,8 +1484,7 @@ which can be used to retrieve it.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Retrieves a list of sources that were used to construct the given part of a
-Collection.</p>
+<p>Retrieves a list of sources that were used to construct the given part of a Collection.</p>
 </div></span>
   
 </li>
@@ -1515,11 +1511,7 @@ Collection.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Record an entry to the provenance data between two parts, or a part and an
-item. This will populate the destination field of `from`, and the source
-field of the `to` in their respective associations. If from_coord or
-to_coord is specified, then the associations of the part of the from/to
-collection at that coordinate will populated instead.</p>
+<p>Record an entry to the provenance data between two parts, or a part and an item. This will populate the destination field of `from`, and the source field of the `to` in their respective associations. If from_coord or to_coord is specified, then the associations of the part of the from/to collection at that coordinate will populated instead.</p>
 
 
   </div>
@@ -1671,13 +1663,6 @@ collection at that coordinate will populated instead.</p>
       <pre class="lines">
 
 
-348
-349
-350
-351
-352
-353
-354
 355
 356
 357
@@ -1685,10 +1670,17 @@ collection at that coordinate will populated instead.</p>
 359
 360
 361
-362</pre>
+362
+363
+364
+365
+366
+367
+368
+369</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 348</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 355</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_provenance'>add_provenance</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:from</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:to</span><span class='rbracket'>]</span> <span class='comment'># special case: provenance between two parts on the same collection
@@ -1722,8 +1714,7 @@ collection at that coordinate will populated instead.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>For the given associatable target object, appends or concatenates the given
-datum_to_append to the association at `key` for that object</p>
+<p>For the given associatable target object, appends or concatenates the given datum_to_append to the association at `key` for that object</p>
 
 
   </div>
@@ -1833,18 +1824,18 @@ datum_to_append to the association at `key` for that object</p>
       <pre class="lines">
 
 
-400
-401
-402
-403
-404
-405
-406
 407
-408</pre>
+408
+409
+410
+411
+412
+413
+414
+415</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 400</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 407</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append_to_association'>append_to_association</span><span class='lparen'>(</span><span class='id identifier rubyid_association_map'>association_map</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_datum_to_append'>datum_to_append</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:coord</span><span class='rbracket'>]</span> <span class='comment'># we will be interacting with the associations of a part of a collection if coord is specified
@@ -1872,8 +1863,7 @@ datum_to_append to the association at `key` for that object</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Retrieves a list of destinations that were made using the given part of a
-Collection</p>
+<p>Retrieves a list of destinations that were made using the given part of a Collection</p>
 
 
   </div>
@@ -1893,8 +1883,7 @@ Collection</p>
       
         &mdash;
         <div class='inline'>
-<p>the part of interest, or the collection which contains the part of
-interest. For the second case, coord must also be specified</p>
+<p>the part of interest, or the collection which contains the part of interest. For the second case, coord must also be specified</p>
 </div>
       
     </li>
@@ -1926,16 +1915,16 @@ interest. For the second case, coord must also be specified</p>
       <pre class="lines">
 
 
-384
-385
-386
-387
-388
-389
-390</pre>
+391
+392
+393
+394
+395
+396
+397</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 384</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 391</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destinations'>destinations</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_coord'>coord</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_coord'>coord</span>
@@ -1961,8 +1950,7 @@ interest. For the second case, coord must also be specified</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Given an item, or a part of a collection, serializes it into a simple tag
-which can be used to retrieve it.</p>
+<p>Given an item, or a part of a collection, serializes it into a simple tag which can be used to retrieve it.</p>
 
 
   </div>
@@ -1982,8 +1970,7 @@ which can be used to retrieve it.</p>
       
         &mdash;
         <div class='inline'>
-<p>can be either an Item, or an i/o object corresponding to a part of a
-collection, which can be thought of as constituting a &#39;sub item&#39;</p>
+<p>can be either an Item, or an i/o object corresponding to a part of a collection, which can be thought of as constituting a &#39;sub item&#39;</p>
 </div>
       
     </li>
@@ -1997,20 +1984,20 @@ collection, which can be thought of as constituting a &#39;sub item&#39;</p>
       <pre class="lines">
 
 
-415
-416
-417
-418
-419
-420
-421
 422
 423
 424
-425</pre>
+425
+426
+427
+428
+429
+430
+431
+432</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 415</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 422</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_serialize_as_simple_tag'>serialize_as_simple_tag</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='comma'>,</span> <span class='id identifier rubyid_coord'>coord</span><span class='comma'>,</span> <span class='id identifier rubyid_additional_info'>additional_info</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_info'>info</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_collection?'>collection?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_coord'>coord</span>
@@ -2040,8 +2027,7 @@ collection, which can be thought of as constituting a &#39;sub item&#39;</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Retrieves a list of sources that were used to construct the given part of a
-Collection</p>
+<p>Retrieves a list of sources that were used to construct the given part of a Collection</p>
 
 
   </div>
@@ -2061,8 +2047,7 @@ Collection</p>
       
         &mdash;
         <div class='inline'>
-<p>the part of interest, or the collection which contains the part of
-interest. For the second case, coord must also be specified</p>
+<p>the part of interest, or the collection which contains the part of interest. For the second case, coord must also be specified</p>
 </div>
       
     </li>
@@ -2094,16 +2079,16 @@ interest. For the second case, coord must also be specified</p>
       <pre class="lines">
 
 
-370
-371
-372
-373
-374
-375
-376</pre>
+377
+378
+379
+380
+381
+382
+383</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 377</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sources'>sources</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_coord'>coord</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_coord'>coord</span>
@@ -2163,13 +2148,12 @@ interest. For the second case, coord must also be specified</p>
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Defines a map to manage the associations for an Item, Operation, or
-Plan object, which are Aquarium classes that extend DataAssociator.</p>
+<p>Defines a map to manage the associations for an Item, Operation, or Plan object, which are Aquarium classes that extend DataAssociator.</p>
 
-<p>Note: if `map` contains associations, it is necessary to call `map.save`
-for</p>
+<p>Note: if `map` contains associations, it is necessary to call `map.save` for</p>
 
-<pre class="code ruby"><code class="ruby">the associations to be saved to Aquarium.</code></pre>
+<pre class="code ruby"><code class="ruby">the associations to be saved to Aquarium.
+</code></pre>
 
 
   </div>
@@ -2226,8 +2210,7 @@ for</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>All in one static method which associates a key and value to the
-associations hash of a given object.</p>
+<p>All in one static method which associates a key and value to the associations hash of a given object.</p>
 </div></span>
   
 </li>
@@ -2251,8 +2234,7 @@ associations hash of a given object.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>All in one static method which gets an associated value from the
-associations hash of a given object.</p>
+<p>All in one static method which gets an associated value from the associations hash of a given object.</p>
 </div></span>
   
 </li>
@@ -2357,9 +2339,7 @@ associations hash of a given object.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Gets an association for the data with the key, for a specific row, column
-coordinate within a collection Returns the associated data for the key, if
-any.</p>
+<p>Gets an association for the data with the key, for a specific row, column coordinate within a collection Returns the associated data for the key, if any.</p>
 </div></span>
   
 </li>
@@ -2409,10 +2389,7 @@ any.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>To be called when the object of association is a collection, establishes a
-matrix parallel to the sample matrix which can be used to store additional
-information about individual parts Each slot in the matrix will be a new
-empty hash.</p>
+<p>To be called when the object of association is a collection, establishes a matrix parallel to the sample matrix which can be used to store additional information about individual parts Each slot in the matrix will be a new empty hash.</p>
 </div></span>
   
 </li>
@@ -2484,9 +2461,7 @@ empty hash.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Adds an association for the data with the key, for a specific row, column
-coordinate within a collection If the data_matrix for the collection has
-not been created yet, it is initialized.</p>
+<p>Adds an association for the data with the key, for a specific row, column coordinate within a collection If the data_matrix for the collection has not been created yet, it is initialized.</p>
 </div></span>
   
 </li>
@@ -2659,7 +2634,12 @@ not been created yet, it is initialized.</p>
 63
 64
 65
-66</pre>
+66
+67
+68
+69
+70
+71</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 49</span>
@@ -2668,14 +2648,19 @@ not been created yet, it is initialized.</p>
   <span class='ivar'>@object</span> <span class='op'>=</span> <span class='id identifier rubyid_object'>object</span>
   <span class='ivar'>@map</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 
+
+
   <span class='ivar'>@object</span><span class='period'>.</span><span class='id identifier rubyid_associations'>associations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_datum'>datum</span><span class='op'>|</span>
     <span class='ivar'>@map</span><span class='lbracket'>[</span><span class='id identifier rubyid_datum'>datum</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>=</span>
       <span class='kw'>if</span> <span class='ivar'>@object</span><span class='period'>.</span><span class='id identifier rubyid_upload'>upload</span><span class='lparen'>(</span><span class='id identifier rubyid_datum'>datum</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
         <span class='id identifier rubyid_datum'>datum</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
       <span class='kw'>else</span>
         <span class='const'><span class='object_link'><a href="" title="AssociationManagement::UploadAssoc (class)">UploadAssoc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="AssociationManagement::UploadAssoc#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_datum'>datum</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='ivar'>@object</span><span class='period'>.</span><span class='id identifier rubyid_upload'>upload</span><span class='lparen'>(</span><span class='id identifier rubyid_datum'>datum</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>here</span><span class='tstring_end'>&quot;</span></span>
       <span class='kw'>end</span>
   <span class='kw'>end</span>
+
+  
 
   <span class='kw'>if</span> <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Collection</span>
     <span class='id identifier rubyid_initialize_part_data'>initialize_part_data</span>
@@ -2706,11 +2691,7 @@ not been created yet, it is initialized.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>All in one static method which associates a key and value to the
-associations hash of a given object. If an association already exists at
-the given key, it will be replaced. Can associate to parts of collection
-either using a part field value, or an optional coordinate specification
-with a collection</p>
+<p>All in one static method which associates a key and value to the associations hash of a given object. If an association already exists at the given key, it will be replaced. Can associate to parts of collection either using a part field value, or an optional coordinate specification with a collection</p>
 
 
   </div>
@@ -2836,11 +2817,6 @@ with a collection</p>
       <pre class="lines">
 
 
-96
-97
-98
-99
-100
 101
 102
 103
@@ -2851,10 +2827,15 @@ with a collection</p>
 108
 109
 110
-111</pre>
+111
+112
+113
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_associate_data'>associate_data</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_defaults'>defaults</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>data_matrix:</span> <span class='const'><span class='object_link'><a href="#DATAMATRIX_KEY-constant" title="AssociationManagement::AssociationMap::DATAMATRIX_KEY (constant)">DATAMATRIX_KEY</a></span></span> <span class='rbrace'>}</span>
@@ -2889,11 +2870,7 @@ with a collection</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>All in one static method which gets an associated value from the
-associations hash of a given object. If an association doesn&#39;t exist at
-the given key, returns nil. Can get associations from parts of collection
-either using a part field value, or an optional coordinate specification
-with a collection</p>
+<p>All in one static method which gets an associated value from the associations hash of a given object. If an association doesn&#39;t exist at the given key, returns nil. Can get associations from parts of collection either using a part field value, or an optional coordinate specification with a collection</p>
 
 
   </div>
@@ -3019,11 +2996,6 @@ with a collection</p>
       <pre class="lines">
 
 
-126
-127
-128
-129
-130
 131
 132
 133
@@ -3033,10 +3005,15 @@ with a collection</p>
 137
 138
 139
-140</pre>
+140
+141
+142
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_associated_data'>get_associated_data</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_defaults'>defaults</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>data_matrix:</span> <span class='const'><span class='object_link'><a href="#DATAMATRIX_KEY-constant" title="AssociationManagement::AssociationMap::DATAMATRIX_KEY (constant)">DATAMATRIX_KEY</a></span></span> <span class='rbrace'>}</span>
@@ -3076,8 +3053,7 @@ with a collection</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Retrieves part_data from the data associations of constituent parts.
-achieves forward compatibility with AQ Part update</p>
+<p>Retrieves part_data from the data associations of constituent parts. achieves forward compatibility with AQ Part update</p>
 
 
   </div>
@@ -3091,21 +3067,21 @@ achieves forward compatibility with AQ Part update</p>
       <pre class="lines">
 
 
-70
-71
-72
-73
-74
 75
 76
 77
 78
 79
 80
-81</pre>
+81
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_data_matrix_all'>data_matrix_all</span><span class='lparen'>(</span><span class='id identifier rubyid_coll'>coll</span><span class='comma'>,</span> <span class='id identifier rubyid_data_matrix'>data_matrix</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_pas'>pas</span> <span class='op'>=</span> <span class='id identifier rubyid_coll'>coll</span><span class='period'>.</span><span class='id identifier rubyid_part_associations'>part_associations</span>
@@ -3170,17 +3146,17 @@ achieves forward compatibility with AQ Part update</p>
       <pre class="lines">
 
 
-192
-193
-194
-195
-196
-197
-198
-199</pre>
+199
+200
+201
+202
+203
+204
+205
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 199</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='ivar'>@map</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
@@ -3229,8 +3205,7 @@ achieves forward compatibility with AQ Part update</p>
       
         &mdash;
         <div class='inline'>
-<p>optionally specify a data matrix to access besides the default one, for
-example, you might have the default part data, alongside a routing matrix</p>
+<p>optionally specify a data matrix to access besides the default one, for example, you might have the default part data, alongside a routing matrix</p>
 </div>
       
     </li>
@@ -3244,12 +3219,12 @@ example, you might have the default part data, alongside a routing matrix</p>
       <pre class="lines">
 
 
-222
-223
-224</pre>
+229
+230
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 229</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_data_matrix'>get_data_matrix</span><span class='lparen'>(</span><span class='id identifier rubyid_data_matrix'>data_matrix</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DATAMATRIX_KEY-constant" title="AssociationManagement::AssociationMap::DATAMATRIX_KEY (constant)">DATAMATRIX_KEY</a></span></span><span class='rparen'>)</span>
   <span class='const'>Matrix</span><span class='period'>.</span><span class='id identifier rubyid_rows'>rows</span><span class='lparen'>(</span><span class='ivar'>@map</span><span class='lbracket'>[</span><span class='id identifier rubyid_data_matrix'>data_matrix</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -3271,9 +3246,7 @@ example, you might have the default part data, alongside a routing matrix</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Gets an association for the data with the key, for a specific row, column
-coordinate within a collection Returns the associated data for the key, if
-any.</p>
+<p>Gets an association for the data with the key, for a specific row, column coordinate within a collection Returns the associated data for the key, if any.</p>
 
 
   </div>
@@ -3343,8 +3316,7 @@ any.</p>
       
         &mdash;
         <div class='inline'>
-<p>optionally specify a data matrix to access besides the default one, for
-example, you might have the default part data, alongside a routing matrix</p>
+<p>optionally specify a data matrix to access besides the default one, for example, you might have the default part data, alongside a routing matrix</p>
 </div>
       
     </li>
@@ -3358,12 +3330,12 @@ example, you might have the default part data, alongside a routing matrix</p>
       <pre class="lines">
 
 
-212
-213
-214</pre>
+219
+220
+221</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 219</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_getrc'>getrc</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_column'>column</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_data_matrix'>data_matrix</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DATAMATRIX_KEY-constant" title="AssociationManagement::AssociationMap::DATAMATRIX_KEY (constant)">DATAMATRIX_KEY</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@map</span><span class='lbracket'>[</span><span class='id identifier rubyid_data_matrix'>data_matrix</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_row'>row</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_column'>column</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='ivar'>@map</span><span class='lbracket'>[</span><span class='id identifier rubyid_data_matrix'>data_matrix</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -3385,10 +3357,7 @@ example, you might have the default part data, alongside a routing matrix</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>To be called when the object of association is a collection, establishes a
-matrix parallel to the sample matrix which can be used to store additional
-information about individual parts Each slot in the matrix will be a new
-empty hash.</p>
+<p>To be called when the object of association is a collection, establishes a matrix parallel to the sample matrix which can be used to store additional information about individual parts Each slot in the matrix will be a new empty hash.</p>
 
 
   </div>
@@ -3426,8 +3395,7 @@ empty hash.</p>
       
         &mdash;
         <div class='inline'>
-<p>optionally specify a data matrix to access besides the default one, for
-example, you might have the default part data, alongside a routing matrix</p>
+<p>optionally specify a data matrix to access besides the default one, for example, you might have the default part data, alongside a routing matrix</p>
 </div>
       
     </li>
@@ -3441,18 +3409,22 @@ example, you might have the default part data, alongside a routing matrix</p>
       <pre class="lines">
 
 
-182
-183
-184
-185
-186</pre>
+187
+188
+189
+190
+191
+192
+193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize_part_data'>initialize_part_data</span><span class='lparen'>(</span><span class='id identifier rubyid_data_matrix'>data_matrix</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DATAMATRIX_KEY-constant" title="AssociationManagement::AssociationMap::DATAMATRIX_KEY (constant)">DATAMATRIX_KEY</a></span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid Method Call: cannot associate part data to an object that isn&#39;t a collection</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='ivar'>@object</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Collection</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_coll'>coll</span> <span class='op'>=</span> <span class='id identifier rubyid_collection_from'>collection_from</span><span class='lparen'>(</span><span class='ivar'>@object</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+  <span class='comment'># TODO: fix the following so that can use the Base method
+</span>  <span class='comment'># coll = collection_from(@object.id)
+</span>  <span class='id identifier rubyid_coll'>coll</span> <span class='op'>=</span> <span class='const'>Collection</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='ivar'>@object</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='ivar'>@map</span><span class='lbracket'>[</span><span class='id identifier rubyid_data_matrix'>data_matrix</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_coll'>coll</span><span class='period'>.</span><span class='id identifier rubyid_dimensions'>dimensions</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_coll'>coll</span><span class='period'>.</span><span class='id identifier rubyid_dimensions'>dimensions</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='ivar'>@map</span><span class='lbracket'>[</span><span class='id identifier rubyid_data_matrix'>data_matrix</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3486,12 +3458,12 @@ example, you might have the default part data, alongside a routing matrix</p>
       <pre class="lines">
 
 
-289
-290
-291</pre>
+296
+297
+298</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 289</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 296</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_keys'>keys</span>
   <span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
@@ -3513,8 +3485,7 @@ example, you might have the default part data, alongside a routing matrix</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Adds an association for the data with the key. The data must be
-serializable.</p>
+<p>Adds an association for the data with the key. The data must be serializable.</p>
 
 
   </div>
@@ -3606,16 +3577,16 @@ serializable.</p>
       <pre class="lines">
 
 
-149
-150
-151
-152
-153
 154
-155</pre>
+155
+156
+157
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>tag:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@map</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Upload</span><span class='rparen'>)</span>
@@ -3641,9 +3612,7 @@ serializable.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Adds an association for the data with the key, for a specific row, column
-coordinate within a collection If the data_matrix for the collection has
-not been created yet, it is initialized</p>
+<p>Adds an association for the data with the key, for a specific row, column coordinate within a collection If the data_matrix for the collection has not been created yet, it is initialized</p>
 
 
   </div>
@@ -3729,8 +3698,7 @@ not been created yet, it is initialized</p>
       
         &mdash;
         <div class='inline'>
-<p>optionally specify a data matrix to access besides the default one, for
-example, you might have the default part data, alongside a routing matrix</p>
+<p>optionally specify a data matrix to access besides the default one, for example, you might have the default part data, alongside a routing matrix</p>
 </div>
       
     </li>
@@ -3744,14 +3712,14 @@ example, you might have the default part data, alongside a routing matrix</p>
       <pre class="lines">
 
 
-168
-169
-170
-171
-172</pre>
+173
+174
+175
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 173</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_putrc'>putrc</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_column'>column</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_data_matrix'>data_matrix</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DATAMATRIX_KEY-constant" title="AssociationManagement::AssociationMap::DATAMATRIX_KEY (constant)">DATAMATRIX_KEY</a></span></span><span class='rparen'>)</span>
   <span class='comment'># if the data_matrix for this collection does not exist yet, initialize it.
@@ -3789,13 +3757,6 @@ example, you might have the default part data, alongside a routing matrix</p>
       <pre class="lines">
 
 
-240
-241
-242
-243
-244
-245
-246
 247
 248
 249
@@ -3804,10 +3765,17 @@ example, you might have the default part data, alongside a routing matrix</p>
 252
 253
 254
-255</pre>
+255
+256
+257
+258
+259
+260
+261
+262</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 247</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save'>save</span>
   <span class='id identifier rubyid_das'>das</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -3842,9 +3810,7 @@ example, you might have the default part data, alongside a routing matrix</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>saves part_data to the data associations of constituent parts. achieves
-forward compatibility with AQ Part update built off of set_data_matrix from
-collection.rb</p>
+<p>saves part_data to the data associations of constituent parts. achieves forward compatibility with AQ Part update built off of set_data_matrix from collection.rb</p>
 
 
   </div>
@@ -3858,13 +3824,6 @@ collection.rb</p>
       <pre class="lines">
 
 
-260
-261
-262
-263
-264
-265
-266
 267
 268
 269
@@ -3884,10 +3843,17 @@ collection.rb</p>
 283
 284
 285
-286</pre>
+286
+287
+288
+289
+290
+291
+292
+293</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 267</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_data_matrix_alt'>save_data_matrix_alt</span><span class='lparen'>(</span><span class='id identifier rubyid_coll'>coll</span><span class='comma'>,</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='comma'>,</span> <span class='label'>offset:</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_pm'>pm</span> <span class='op'>=</span> <span class='id identifier rubyid_coll'>coll</span><span class='period'>.</span><span class='id identifier rubyid_part_matrix'>part_matrix</span>
@@ -3933,8 +3899,7 @@ collection.rb</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Replace or initialize the data matrix for this object with a custom one.
-`matrix` have the same row column dimensions as the collection</p>
+<p>Replace or initialize the data matrix for this object with a custom one. `matrix` have the same row column dimensions as the collection</p>
 
 
   </div>
@@ -3972,9 +3937,7 @@ collection.rb</p>
       
         &mdash;
         <div class='inline'>
-<p>optionally specify a data matrix (by key) to access besides the default
-one, for example, you might have the default part data, alongside a routing
-matrix</p>
+<p>optionally specify a data matrix (by key) to access besides the default one, for example, you might have the default part data, alongside a routing matrix</p>
 </div>
       
     </li>
@@ -3988,12 +3951,12 @@ matrix</p>
       <pre class="lines">
 
 
-235
-236
-237</pre>
+242
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 235</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_data_matrix'>set_data_matrix</span><span class='lparen'>(</span><span class='id identifier rubyid_matrix'>matrix</span><span class='comma'>,</span> <span class='id identifier rubyid_data_matrix'>data_matrix</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DATAMATRIX_KEY-constant" title="AssociationManagement::AssociationMap::DATAMATRIX_KEY (constant)">DATAMATRIX_KEY</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@map</span><span class='lbracket'>[</span><span class='id identifier rubyid_data_matrix'>data_matrix</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
@@ -4033,12 +3996,12 @@ matrix</p>
       <pre class="lines">
 
 
-294
-295
-296</pre>
+301
+302
+303</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 294</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 301</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_string'>to_string</span>
   <span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -4094,8 +4057,7 @@ matrix</p>
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>private class that is used to deal with associating upload objects
-alongside their tag</p>
+<p>private class that is used to deal with associating upload objects alongside their tag</p>
 
 
   </div>
@@ -4261,13 +4223,13 @@ alongside their tag</p>
       <pre class="lines">
 
 
-303
-304
-305
-306</pre>
+310
+311
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 303</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 310</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='comma'>,</span> <span class='id identifier rubyid_upload'>upload</span><span class='rparen'>)</span>
   <span class='ivar'>@upload</span> <span class='op'>=</span> <span class='id identifier rubyid_upload'>upload</span>
@@ -4311,12 +4273,12 @@ alongside their tag</p>
       <pre class="lines">
 
 
-314
-315
-316</pre>
+321
+322
+323</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 314</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 321</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tag'>tag</span>
   <span class='ivar'>@tag</span>
@@ -4354,12 +4316,12 @@ alongside their tag</p>
       <pre class="lines">
 
 
-312
-313
-314</pre>
+319
+320
+321</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 312</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 319</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upload'>upload</span>
   <span class='ivar'>@upload</span>
@@ -4391,12 +4353,12 @@ alongside their tag</p>
       <pre class="lines">
 
 
-308
-309
-310</pre>
+315
+316
+317</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 308</span>
+      <pre class="code"><span class="info file"># File 'AssociationManagement.rb', line 315</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_change_tag'>change_tag</span><span class='lparen'>(</span><span class='id identifier rubyid_new_tag'>new_tag</span><span class='rparen'>)</span>
   <span class='ivar'>@tag</span> <span class='op'>=</span> <span class='id identifier rubyid_new_tag'>new_tag</span>
