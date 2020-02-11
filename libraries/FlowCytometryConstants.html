@@ -784,6 +784,16 @@ function mainFocus() {
   setTimeout(function() { $('#main').focus(); }, 10);
 }
 
+function navigationChange() {
+  // This works around the broken anchor navigation with the YARD template.
+  window.onpopstate = function() {
+    var hash = window.location.hash;
+    if (hash !== '' && $(hash)[0]) {
+      $(hash)[0].scrollIntoView();
+    }
+  };
+}
+
 $(document).ready(function() {
   navResizer();
   navExpander();
@@ -796,6 +806,7 @@ $(document).ready(function() {
   constantSummaryToggle();
   generateTOC();
   mainFocus();
+  navigationChange();
 });
 
 })();
@@ -873,7 +884,7 @@ $(document).ready(function() {
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>BEAD_UPLOAD</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
-        <dt id="LAB_NAME-constant" class="">LAB_NAME =
+        <dt id="KLAVINS_LAB-constant" class="">KLAVINS_LAB =
           <div class="docstring">
   <div class="discussion">
     
@@ -889,26 +900,15 @@ $(document).ready(function() {
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Klavins Lab</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span></pre></dd>
       
-        <dt id="YOUR_LAB_NAME-constant" class="">YOUR_LAB_NAME =
-          <div class="docstring">
-  <div class="discussion">
-    
-<p>Change LAB_NAME to use different constants</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div>
+        <dt id="HAASE_LAB-constant" class="">HAASE_LAB =
+          
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YOUR_LAB_HERE</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Haase Lab</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span></pre></dd>
       
         <dt id="FLOW_CYTOMETER_TYPE-constant" class="">FLOW_CYTOMETER_TYPE =
           
         </dt>
-        <dd><pre class="code"><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Klavins Lab</span><span class='label_end'>&#39;:</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>BD Accuri C6</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YOUR_LAB_HERE</span><span class='label_end'>&#39;:</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YOUR_FLOW_CYTOMETER_TYPE</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbrace'>}</span></pre></dd>
+        <dd><pre class="code"><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Klavins Lab</span><span class='label_end'>&#39;:</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>BD Accuri C6</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Haase Lab</span><span class='label_end'>&#39;:</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Attune</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbrace'>}</span></pre></dd>
       
         <dt id="MY_FLOW_CYTOMETER_PROPERTIES-constant" class="">MY_FLOW_CYTOMETER_PROPERTIES =
           
@@ -943,6 +943,46 @@ $(document).ready(function() {
         <span class='label'>saving_directory:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>FIND_OUT_THE_PATH/FCS_Exports</span><span class='tstring_end'>&#39;</span></span>
       <span class='rbrace'>}</span><span class='comma'>,</span>
     <span class='label'>valid_containers:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>96 Well Flat Bottom (black)</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YOUR_LAB_HERE</span><span class='label_end'>&#39;:</span><span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YOUR_PLATE_READER_TYPE</span><span class='label_end'>&#39;:</span><span class='lbrace'>{</span> 
+      <span class='label'>software_steps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>properties</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> 
+      <span class='label'>valid_containers:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>96 Well Flat Bottom (black)</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> 
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>saving_directory:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>SAVING_DIRECTORY</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Haase Lab</span><span class='label_end'>&#39;:</span> <span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Attune</span><span class='label_end'>&#39;:</span> <span class='lbrace'>{</span>
+      <span class='label'>software_properties:</span> <span class='lbrace'>{</span>
+        <span class='label'>sample_type_settings:</span> <span class='lbrace'>{</span>
+          <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Yeast Strain</span><span class='label_end'>&#39;:</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Run Limits</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>30,000 events</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Run Limits (Max Volume)</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>250ul</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Fluidics</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Fast</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Set Threshold</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>FSC-H less than 400,000</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Plasmid</span><span class='label_end'>&#39;:</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Run Limits</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>30,000 events</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Run Limits (Max Volume)</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>250ul</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Fluidics</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Fast</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Set Threshold</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>FSC-H less than 80,000</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Beads</span><span class='label_end'>&#39;:</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Figure out</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Calibration limits</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Run Limits</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>30,000 events</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Run Limits (Max Volume)</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>250ul</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Fluidics</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Fast</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Set Threshold</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>FSC-H less than 80,000</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+        <span class='rbrace'>}</span><span class='comma'>,</span>
+        <span class='label'>plate_type_hash:</span> <span class='lbrace'>{</span>
+          <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>96 Well Flat Bottom (black)</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Flat bottom plate</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>24 Deep Well Plate</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>24 Deep Well Plate</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>24 Unit Disorganized Collection</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Disorganized Collection</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Diluted beads</span><span class='label_end'>&#39;:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>24-Well Tube Rack</span><span class='tstring_end'>&#39;</span></span>
+        <span class='rbrace'>}</span><span class='comma'>,</span>
+        <span class='label'>images:</span> <span class='lbrace'>{</span>
+          <span class='label'>open_software:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Actions/Yeast_Gates/flowCytometryImages/open_FC_software_icon.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='comment'>#file
+</span>          <span class='label'>select_plate_type:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Actions/Yeast_Gates/flowCytometryImages/select_plate_type.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>   <span class='comment'># Remove not needed
+</span>          <span class='label'>apply_settings:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Actions/Yeast_Gates/flowCytometryImages/flow_cytometry_settings.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>    <span class='comment'>#Pic of side bar
+</span>          <span class='label'>read_plate:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Actions/Yeast_Gates/flowCytometryImages/measure_plate_autorun.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  <span class='comment'># Start Up button
+</span>          <span class='label'>export_new_data:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Actions/FlowCytometry/saveFCS_menu_cropped.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>    <span class='comment'># Right click?  Remove probably
+</span>          <span class='label'>new_export_directory:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Actions/FlowCytometry/saveFCS_dirname_cropped.png</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># Remove probably
+</span>        <span class='rbrace'>}</span><span class='comma'>,</span>
+        <span class='label'>measurement_type_templates:</span> <span class='lbrace'>{</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cleaning</span><span class='label_end'>&quot;:</span> <span class='lbrace'>{</span><span class='label'>dtype:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>could be the three cleaning files to record contamination over time!</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Yeast</span><span class='label_end'>&quot;:</span> <span class='lbrace'>{</span><span class='label'>dtype:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>paratmers for yeast measurements</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ecoli</span><span class='label_end'>&quot;:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Calibration</span><span class='label_end'>&quot;:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+        <span class='rbrace'>}</span><span class='comma'>,</span>
+        <span class='label'>saving_directory:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>FIND_OUT_THE_PATH/FCS_Exports</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>valid_containers:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>96 Well Flat Bottom (black)</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>24 Deep Well Plate</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>24 Unit Disorganized Collection</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YOUR_LAB_HERE</span><span class='label_end'>&#39;:</span><span class='lbrace'>{</span>
