@@ -14,7 +14,9 @@ This operation also transfers the culture conditions and an experimental materia
 - **Culture Plate** [P]  
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "Eppendorf 96 Deepwell Plate")'>Eppendorf 96 Deepwell Plate</a>
 
+### Parameters
 
+- **Delete Input Plate** [Yes, No]
 
 ### Outputs
 
@@ -45,6 +47,7 @@ class Protocol
   # DEF 
   INPUT  = "Culture Plate"
   OUTPUT = "Glycerol Stock Plate"
+  INPUT_DELETE = "Delete Input Plate"
   
   # Constants
   GLYCEROL_PER_WELL = 20#ul
@@ -84,7 +87,9 @@ class Protocol
         glycerol_stock_plate.location = "-80#{DEGREES_C} Freezer"
         glycerol_stock_plate.save
       end
-      input_collection.mark_as_deleted # TODO: Add keep plate parameter!!
+      if op.input(INPUT_DELETE) == "Yes"
+        input_collection.mark_as_deleted # TODO: Add keep plate parameter!!
+      end
     end
     cleaning_up
     {operations: operations}
