@@ -784,6 +784,16 @@ function mainFocus() {
   setTimeout(function() { $('#main').focus(); }, 10);
 }
 
+function navigationChange() {
+  // This works around the broken anchor navigation with the YARD template.
+  window.onpopstate = function() {
+    var hash = window.location.hash;
+    if (hash !== '' && $(hash)[0]) {
+      $(hash)[0].scrollIntoView();
+    }
+  };
+}
+
 $(document).ready(function() {
   navResizer();
   navExpander();
@@ -796,6 +806,7 @@ $(document).ready(function() {
   constantSummaryToggle();
   generateTOC();
   mainFocus();
+  navigationChange();
 });
 
 })();
@@ -885,8 +896,7 @@ $(document).ready(function() {
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Common instrument class methods. Try to find common methods in instrument
-classes.</p>
+<p>Common instrument class methods. Try to find common methods in instrument classes.</p>
 
 
   </div>
