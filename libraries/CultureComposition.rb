@@ -122,16 +122,22 @@ class CultureComponent
     @item = args.fetch(:item, nil)
     @final_concentration = args.fetch(:final_concentration, nil)
     @working_vol = { qty: 0, units: MICROLITERS }
-    get_component_type_attributes(args)
+    get_component_type_attributes#(args) May should add back args but dont think its needed
     @added = false
   end
   
-  def get_component_type_attributes(args)
+  def get_component_type_attributes#(args) #May should add back args but dont think its needed
     case input_name
     when "Strain"
     when "Media"
     when "Control Tag"
     when "Inducer(s)"
+
+      #if item.class == Hash then there is no stock.  Check here makes debugging easier
+      if item.class == Hash 
+        raise "Inducer not in stock, check all inducers for existing stock"
+      end
+
       qty, units, name = item.object_type.name.split(' ')
       set_stock_item_concentration(qty: qty.to_f, units: units)
       set_dilution_factor(val: calculate_dilution_factor(stock_conc: stock_concentration, final_conc: final_concentration))
