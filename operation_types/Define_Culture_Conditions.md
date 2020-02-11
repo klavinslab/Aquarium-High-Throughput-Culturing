@@ -94,6 +94,7 @@ The operation will then be wired to `Inoculate Culture Plate` where all conditio
   - <a href='#' onclick='easy_select("Sample Types", "Yeast Strain")'>Yeast Strain</a> / <a href='#' onclick='easy_select("Containers", "Yeast Glycerol Stock")'>Yeast Glycerol Stock</a>
   - <a href='#' onclick='easy_select("Sample Types", "Plasmid")'>Plasmid</a> / <a href='#' onclick='easy_select("Containers", "E coli Plate of Plasmid")'>E coli Plate of Plasmid</a>
   - <a href='#' onclick='easy_select("Sample Types", "E coli strain")'>E coli strain</a> / <a href='#' onclick='easy_select("Containers", "E coli Glycerol Stock")'>E coli Glycerol Stock</a>
+  - <a href='#' onclick='easy_select("Sample Types", "Yeast Strain")'>Yeast Strain</a> / <a href='#' onclick='easy_select("Containers", "Yeast Overnight Suspension")'>Yeast Overnight Suspension</a>
 
 - **Media** [M]  
   - <a href='#' onclick='easy_select("Sample Types", "Media")'>Media</a> / <a href='#' onclick='easy_select("Containers", "800 mL Liquid")'>800 mL Liquid</a>
@@ -114,6 +115,7 @@ The operation will then be wired to `Inoculate Culture Plate` where all conditio
   - <a href='#' onclick='easy_select("Sample Types", "Yeast Strain")'>Yeast Strain</a> / <a href='#' onclick='easy_select("Containers", "Yeast Glycerol Stock")'>Yeast Glycerol Stock</a>
   - <a href='#' onclick='easy_select("Sample Types", "Plasmid")'>Plasmid</a> / <a href='#' onclick='easy_select("Containers", "E coli Plate of Plasmid")'>E coli Plate of Plasmid</a>
   - <a href='#' onclick='easy_select("Sample Types", "E coli strain")'>E coli strain</a> / <a href='#' onclick='easy_select("Containers", "E coli Glycerol Stock")'>E coli Glycerol Stock</a>
+  - <a href='#' onclick='easy_select("Sample Types", "Yeast Strain")'>Yeast Strain</a> / <a href='#' onclick='easy_select("Containers", "Yeast Overnight Suspension")'>Yeast Overnight Suspension</a>
 
 ### Precondition <a href='#' id='precondition'>[hide]</a>
 ```ruby
