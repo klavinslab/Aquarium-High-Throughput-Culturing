@@ -19,6 +19,7 @@ This operation takes in a collection and dilutes the microbial cultures found in
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "Eppendorf 96 Deepwell Plate")'>Eppendorf 96 Deepwell Plate</a>
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "96 Well Flat Bottom (black)")'>96 Well Flat Bottom (black)</a>
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "96 U-bottom Well Plate")'>96 U-bottom Well Plate</a>
+  - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "24 Unit Disorganized Collection")'>24 Unit Disorganized Collection</a>
 
 - **Media** [M]  
   - <a href='#' onclick='easy_select("Sample Types", "Media")'>Media</a> / <a href='#' onclick='easy_select("Containers", "800 mL Liquid")'>800 mL Liquid</a>
@@ -33,6 +34,7 @@ This operation takes in a collection and dilutes the microbial cultures found in
 
 - **Diluted Plate** [P] (Array) 
   - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "Eppendorf 96 Deepwell Plate")'>Eppendorf 96 Deepwell Plate</a>
+  - NO SAMPLE TYPE / <a href='#' onclick='easy_select("Containers", "24 Unit Disorganized Collection")'>24 Unit Disorganized Collection</a>
 
 ### Precondition <a href='#' id='precondition'>[hide]</a>
 ```ruby
