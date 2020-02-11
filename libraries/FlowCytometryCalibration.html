@@ -784,6 +784,16 @@ function mainFocus() {
   setTimeout(function() { $('#main').focus(); }, 10);
 }
 
+function navigationChange() {
+  // This works around the broken anchor navigation with the YARD template.
+  window.onpopstate = function() {
+    var hash = window.location.hash;
+    if (hash !== '' && $(hash)[0]) {
+      $(hash)[0].scrollIntoView();
+    }
+  };
+}
+
 $(document).ready(function() {
   navResizer();
   navExpander();
@@ -796,6 +806,7 @@ $(document).ready(function() {
   constantSummaryToggle();
   generateTOC();
   mainFocus();
+  navigationChange();
 });
 
 })();
@@ -1032,8 +1043,7 @@ $(document).ready(function() {
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Prepares calibration beads by determining whether current beads are
-reusable.</p>
+<p>Prepares calibration beads by determining whether current beads are reusable.</p>
 </div></span>
   
 </li>
@@ -1079,8 +1089,7 @@ reusable.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Deterimines if the beads are expired (&gt;4weeks) or if there is not enough
-volume for the calibration.</p>
+<p>Deterimines if the beads are expired (&gt;4weeks) or if there is not enough volume for the calibration.</p>
 </div></span>
   
 </li>
@@ -1104,8 +1113,7 @@ volume for the calibration.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Defines class FlowCytometry instance variables experimental_item and the
-measurement_item when measuring calibration beads on the flow cytometer.</p>
+<p>Defines class FlowCytometry instance variables experimental_item and the measurement_item when measuring calibration beads on the flow cytometer.</p>
 </div></span>
   
 </li>
@@ -1133,10 +1141,7 @@ measurement_item when measuring calibration beads on the flow cytometer.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Associate all `uploads` to the `target` DataAssociator. The keys of each
-upload will be the concatenation of `key_name` and that upload&#39;s id.
-Associating fcs files to the plan and operation makes fcs data of any
-specific well easily accessible to users</p>
+<p>Associate all `uploads` to the `target` DataAssociator. The keys of each upload will be the concatenation of `key_name` and that upload&#39;s id. Associating fcs files to the plan and operation makes fcs data of any specific well easily accessible to users</p>
 
 
   </div>
@@ -1461,8 +1466,7 @@ specific well easily accessible to users</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Prepares calibration beads by determining whether current beads are
-reusable</p>
+<p>Prepares calibration beads by determining whether current beads are reusable</p>
 
 
   </div>
@@ -1573,8 +1577,7 @@ reusable</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Deterimines if the beads are expired (&gt;4weeks) or if there is not enough
-volume for the calibration</p>
+<p>Deterimines if the beads are expired (&gt;4weeks) or if there is not enough volume for the calibration</p>
 
 
   </div>
@@ -1671,8 +1674,7 @@ volume for the calibration</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Defines class FlowCytometry instance variables experimental_item and the
-measurement_item when measuring calibration beads on the flow cytometer</p>
+<p>Defines class FlowCytometry instance variables experimental_item and the measurement_item when measuring calibration beads on the flow cytometer</p>
 
 
   </div>
