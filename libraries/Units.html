@@ -784,6 +784,16 @@ function mainFocus() {
   setTimeout(function() { $('#main').focus(); }, 10);
 }
 
+function navigationChange() {
+  // This works around the broken anchor navigation with the YARD template.
+  window.onpopstate = function() {
+    var hash = window.location.hash;
+    if (hash !== '' && $(hash)[0]) {
+      $(hash)[0].scrollIntoView();
+    }
+  };
+}
+
 $(document).ready(function() {
   navResizer();
   navExpander();
@@ -796,6 +806,7 @@ $(document).ready(function() {
   constantSummaryToggle();
   generateTOC();
   mainFocus();
+  navigationChange();
 });
 
 })();
@@ -1252,8 +1263,7 @@ $(document).ready(function() {
     
 <p>Return a key for the measure hash defined on the given object type.</p>
 
-<p>The measure hash must be defined in the data proerty of the object type as
-JSON. For instance</p>
+<p>The measure hash must be defined in the data proerty of the object type as JSON. For instance</p>
 
 <pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>measure</span><span class='label_end'>&quot;:</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='label_end'>&quot;:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>concentration</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unit</span><span class='label_end'>&quot;:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>micromolar</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
 </code></pre>
