@@ -2,7 +2,7 @@ var config = {
 
   tagline: "The Laboratory</br>Operating System",
   documentation_url: "http://localhost:4000/aquarium",
-  title: "Aquarium High Throughput Culturing",
+  title: "High-Througput-Culturing",
   navigation: [
 
     {
@@ -11,7 +11,7 @@ var config = {
         { name: "Introduction", type: "local-md", path: "README.md" },
         { name: "About this Workflow", type: "local-md", path: "ABOUT.md" },
         { name: "License", type: "local-md", path: "LICENSE.md" },
-        { name: "Issues", type: "external-link", path: 'https://github.com/klavinslab/Aquarium-High-Throughput-Culturing/issues' }
+        { name: "Issues", type: "external-link", path: 'https://github.com/malloc3/Aquarim-High-Throughput-Culturing/issues' }
       ]
     },
 
@@ -27,6 +27,24 @@ var config = {
             {
               name: 'Apply Experimental Condition',
               path: 'operation_types/Apply_Experimental_Condition' + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'Collection PR Measurement',
+              path: 'operation_types/Collection_PR_Measurement' + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'Create Experimental Plate',
+              path: 'operation_types/Create_Experimental_Plate' + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'Cultures PR Measurement',
+              path: 'operation_types/Cultures_PR_Measurement' + '.md',
               type: "local-md"
             },
           
@@ -73,6 +91,12 @@ var config = {
             },
           
             {
+              name: 'PR Calibration',
+              path: 'operation_types/PR_Calibration' + '.md',
+              type: "local-md"
+            },
+          
+            {
               name: 'Plate Reader Calibration',
               path: 'operation_types/Plate_Reader_Calibration' + '.md',
               type: "local-md"
@@ -107,26 +131,14 @@ var config = {
 
           
             {
-              name: 'AssociationManagement',
-              path: 'libraries/AssociationManagement' + '.html',
-              type: "local-webpage"
-            },
-          
-            {
-              name: 'CollectionDisplay',
-              path: 'libraries/CollectionDisplay' + '.html',
-              type: "local-webpage"
-            },
-          
-            {
               name: 'CultureComposition',
               path: 'libraries/CultureComposition' + '.html',
               type: "local-webpage"
             },
           
             {
-              name: 'Debug',
-              path: 'libraries/Debug' + '.html',
+              name: 'ExperimentalMeasurement',
+              path: 'libraries/ExperimentalMeasurement' + '.html',
               type: "local-webpage"
             },
           
@@ -173,8 +185,26 @@ var config = {
             },
           
             {
+              name: 'PlateReaderCalibration',
+              path: 'libraries/PlateReaderCalibration' + '.html',
+              type: "local-webpage"
+            },
+          
+            {
               name: 'PlateReaderConstants',
               path: 'libraries/PlateReaderConstants' + '.html',
+              type: "local-webpage"
+            },
+          
+            {
+              name: 'PlateReaderConstants',
+              path: 'libraries/PlateReaderConstants' + '.html',
+              type: "local-webpage"
+            },
+          
+            {
+              name: 'PlateReaderHelper',
+              path: 'libraries/PlateReaderHelper' + '.html',
               type: "local-webpage"
             },
           
@@ -191,8 +221,8 @@ var config = {
             },
           
             {
-              name: 'Units',
-              path: 'libraries/Units' + '.html',
+              name: 'PlateReaderSoftware',
+              path: 'libraries/PlateReaderSoftware' + '.html',
               type: "local-webpage"
             },
           
@@ -285,6 +315,12 @@ var config = {
             },
           
             {
+              name: '200 mL Liquid',
+              path: 'object_types/200_mL_Liquid'  + '.md',
+              type: "local-md"
+            },
+          
+            {
               name: '24 Deep Well Plate',
               path: 'object_types/24_Deep_Well_Plate'  + '.md',
               type: "local-md"
@@ -293,6 +329,18 @@ var config = {
             {
               name: '24 Unit Disorganized Collection',
               path: 'object_types/24_Unit_Disorganized_Collection'  + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: '24-Well TC Dish',
+              path: 'object_types/24-Well_TC_Dish'  + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: '400 mL Liquid',
+              path: 'object_types/400_mL_Liquid'  + '.md',
               type: "local-md"
             },
           
@@ -347,6 +395,24 @@ var config = {
             {
               name: 'Eppendorf 96 Deepwell Plate',
               path: 'object_types/Eppendorf_96_Deepwell_Plate'  + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'Yeast 100ml culture',
+              path: 'object_types/Yeast_100ml_culture'  + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'Yeast 250ml culture',
+              path: 'object_types/Yeast_250ml_culture'  + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'Yeast 50ml culture',
+              path: 'object_types/Yeast_50ml_culture'  + '.md',
               type: "local-md"
             },
           

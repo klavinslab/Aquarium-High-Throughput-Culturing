@@ -34,15 +34,16 @@ class FlowCytometer
   def get_lab_name
     aq_instance = Bioturk::Application.config.instance_name.upcase
     if aq_instance == "UW BIOFAB"
-      return KLAVINS_LAB.tosym
+      return KLAVINS_LAB.to_sym
     elsif aq_instance == "DARPA_SD2"
       return HAASE_LAB.to_sym
-    else #usually when its dockerized && Your Lab
-      return HAASE_LAB.to_sym       ##This is temporary.  Should have a check here saying
+    else
+      return HAASE_LAB.to_sym
     end
   end
   
   def get_my_flow_cytometer_type
+    #raise "lab name #{lab_name}"
     FLOW_CYTOMETER_TYPE[lab_name.to_sym]
   end
 
@@ -143,7 +144,7 @@ module FlowCytometryHelper
       end
     end
   end
-  
+
   # Guides technician to transfer the ALLOWABLE_FC_SAMPLETYPES wells to a flow cytometer valid container
   #
   # @effect Guides technician through transfer of cultures, then sets the collection to the output FieldValue
@@ -153,6 +154,7 @@ module FlowCytometryHelper
     part_provenance_transfer(from_collection: from_collection, to_collection: to_collection, process_name: 'transfer')
     qty, units = get_container_working_volume(container=to_collection)
     display_coordinates = alpha_coordinates_96
+
     show do
       title "Transfer to Valid Container"
       separator
@@ -160,8 +162,9 @@ module FlowCytometryHelper
       note "Follow the table below to transfer only the shaded wells:"
       note "Transfer 200ul per well"
       bullet "<b>From</b> #{from_collection.object_type.name} #{from_collection}"
+      table highlihgt_alpha_non_empty(from_collection)
       bullet "<b>To</b> #{to_collection.object_type.name} #{to_collection}"
-      table highlight_alpha_non_empty(to_collection) {|r, c| "#{display_coordinates[r][c]}" }
+      table highlight_non_empty(to_collection)
     end
     output_fieldValue.set(collection: to_collection)
   end

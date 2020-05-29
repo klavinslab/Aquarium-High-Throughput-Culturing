@@ -10,7 +10,7 @@
 require 'date'
 
 module AqUpload
-  # Provides a upload button in a showblock in order to upload a single file
+  # Provides a upload button in a show block in order to upload a single file
   #
   # @param upload_filename [string] can be the name of the file that you want tech to upload
   # @return up_show [hash] is the upload hash created in the upload show block
@@ -115,7 +115,7 @@ module StandardCytometrySoftware
   # Directs techician to which lab and flow cytometer computer to setup workspace
   def go_to_computer(instrument)
     show do
-      title "Go to the #{LAB_NAME} #{instrument.type} #{instrument.instrument_type}"
+      title "Go to the #{instrument.lab_name} #{instrument.type} #{instrument.instrument_type}"
       separator
       warning "<b>The next steps should be done on the #{instrument.instrument_type} computer</b>.".upcase
     end
@@ -145,7 +145,7 @@ module BDAccuri
   include StandardCytometrySoftware
   
   # Guides technician through the steps in setting up the BD Acurri software workspace for culture measurements
-  def setup_instrument_software(instrument)
+  def setup_instrument_software(instrument, op = nil)
     open_software(instrument)
     select_plate_type(instrument)
     get_sample_type_rc_list_hash(instrument).each do |sample_type_name, rc_list|
@@ -311,26 +311,40 @@ end # module KlavinsLabFlowCytometrySoftware
 module Attune
   include AqUpload
   include StandardCytometrySoftware
+
+  R_TO_LETTER = ['A'...'AA'].to_a
   
   # Guides technician through the steps in setting up instrument software workspace for culture measurements
-  def setup_instrument_software(instrument)
+  # op is optional however can be used to add information to labels
+  def setup_instrument_software(instrument, op = nil)
     open_software(instrument)
-    select_plate_type(instrument)
+    #select_plate_type(instrument)
     get_sample_type_rc_list_hash(instrument).each do |sample_type_name, rc_list|
       if ALLOWABLE_FC_SAMPLETYPES.include? sample_type_name
-        #This may be the same.  On the BD Accurie 
+        if op != nil
+          test_group_label = "#{instrument.measurement_item}-#{op.input('When to Measure? (24hr)')}"
+        else
+          test_group_label = "#{instrument.measurement_item}"
+        end
+
         show do
-          title "Select Wells #go to FlowCytometrySoftware library Attune module to customize this step"
+          title "Add Group"
+          note "In the  Attune software add a test group and label it #{test_group_label}"
+        end
+
+        collection = collection_from(instrument.measurement_item)
+        show do
+          title "Add Samples to Plan"
           separator
-          note "Select the following wells for #{sample_type_name} cultures found in #{instrument.measurement_item.object_type.name} #{instrument.measurement_item}."
-          table highlight_alpha_rc(collection_from(instrument.measurement_item), rc_list) {|r,c| "#"}
-          note 'After checking the wells on the screen continue to the next step.'
+          note "In the Attune software add #{rc_list.length} samples in group #{test_group_label}."
+          note 'Rename samples per table below'
+          table highlight_alpha_rc(collection, rc_list, check: false)
         end
         apply_settings(instrument: instrument)
       end
     end
   end
-  
+
   # Guides technician through the steps in setting up the instrument software workspace for calibration measurement
   def setup_instrument_calibration(instrument)
     open_software(instrument)
@@ -356,10 +370,9 @@ module Attune
       sample_type_name = collection_from(instrument.experimental_item).matrix.flatten.uniq.reject {|sid| sid == -1 }.map {|sid| s = Sample.find(sid); s.sample_type.name }.uniq.first.to_sym
     end
     show do
-      title "Apply Settings #go to FlowCytometrySoftware library Attune module to customize this step"
+      title "Apply Settings"
       separator
-      image instrument.software.fetch(:images).fetch(:apply_settings)
-      note "Apply the following settings to the wells you have selected"
+      note "Use the following settings for all measurements"
       note "<b>Make sure that the settings are as follows:</b>"
       instrument.software.fetch(:sample_type_settings).fetch(sample_type_name).each {|setting, val| bullet "Set <b>#{setting}</b> to <b>#{val}</b>"}
       check "Finally, click <b>Apply Settings</b>"
@@ -438,26 +451,47 @@ module Attune
 
   # Guides technician through measuring the experimental culture plate
   def read_plate(instrument:)
+    alpha_26 = ('A'...'AA').to_a
     go_to_computer(instrument)
-    show do
-      title "Load #{instrument.measurement_item.object_type.name} #{instrument.measurement_item}"
-      note "#go to FlowCytometrySoftware library Attune module to customize this step"
-      separator
-      note "Click <b>Eject Plate</b>"
-      note "Be sure that the plate is in the correct orientation. Well A1 should be by the red sticker in the top left corner."
-      check "Finally, load the plate and continue to the next step."
-    end
-    show do 
-      title "Taking Measurements"
-      note "#go to FlowCytometrySoftware library Attune module to customize this step"
-      separator
-      note "Click <b>OPEN RUN DISPLAY</b>"
-      image instrument.software.fetch(:images).fetch(:read_plate)
-      note "Next, click <b>AUTORUN</b>"
-      note "Contiue on to the next step while #{instrument.type} #{instrument.instrument_type} is running..."
+    collection = collection_from(instrument.measurement_item)
+    timepoint = Time.now
+
+    collection.parts.each do |part|
+      row, col = collection.find(part).first
+
+      sample_label = alpha_26[row] + (col+1).to_s + '-' + collection.id.to_s
+
+      show do
+        title "Load sample onto #{instrument.type}"
+        check "Place sample #{sample_label} into sampler"
+        check 'Gently move sampler up into the locked position'
+        table highlight_collection_rcx(collection, [[row,col, sample_label]],
+                                       check: false)
+      end
+
+      show do
+        title 'Take Measurement'
+        note "On the #{instrument.type} computer select sample #{sample_label}"
+        note 'Press <b>Take Sample</b>'
+        separator
+        note "Wait 5 to 10 seconds for the #{instrument.type} to start collecting the sample"
+        note 'Then press <b>Record Measurement</b>'
+      end
+
+      show do
+        title 'Wait to Finish Measurement'
+        warning "Wait for the #{instrument.type} to finish before clicking <b>Okay</b>"
+      end
+
+      show do
+        title 'Return Sample'
+        note 'Gently lower sampler; be careful not to break the needle'
+        note "Place sample #{sample_label} back into the proper location of the test tube rack"
+        table highlight_collection_rcx(collection, [[row,col, sample_label]],
+                                       check: false)
+      end
     end
     instrument.measurement_item.location = instrument.type.to_s
-    timepoint = Time.now
     return timepoint
   end
   

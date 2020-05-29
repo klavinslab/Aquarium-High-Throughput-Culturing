@@ -9,7 +9,7 @@ needs "High Throughput Culturing/InstrumentHelper"
 needs "High Throughput Culturing/PlateReaderSoftware"
 needs "High Throughput Culturing/PlateReaderConstants"
 needs "High Throughput Culturing/PlateReaderCalibration"
-needs "Tissue Culture Libs/CollectionDisplay"
+needs "Collection Management/CollectionDisplay"
 
 class PlateReader 
   include InstrumentHelper

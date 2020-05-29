@@ -41,8 +41,9 @@ needs "High Throughput Culturing/HighThroughputHelper"
 needs "Standard Libs/Debug"
 
 class Protocol
-  include Debug
-  include FlowCytometryHelper, FlowCytometryCalibration, HighThroughputHelper 
+    include Debug
+  #include FlowCytometryCalibration, HighThroughputHelper 
+  #include FlowCytometryHelper
   
   # DEF
   INPUT  = "Optical Particles"
@@ -83,6 +84,7 @@ class Protocol
     release_arr = Protocol.materials_list.flatten.reject {|m| m.is_a? String }.uniq
     cleaning_up(release_arr)
   end # Main
+
 end # Protocol
 
 ```

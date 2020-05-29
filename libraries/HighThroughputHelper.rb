@@ -2,17 +2,19 @@
 # elopez3@gmail.com
 # Updated: 071519
 
-needs "Tissue Culture Libs/CollectionDisplay"
+#needs "Tissue Culture Libs/CollectionDisplay"
+needs 'Collection Management/CollectionDisplay'
 needs "Standard Libs/Units"
 needs "Plate Reader/PlateReaderHelper"
 
 module HTCExperimentalDesign
   include Units
   include AssociationManagement
-  
+  include CollectionDisplay
+
   # Place cultures determined to be controls into the collection specified
-  # 
-  # @param cultures [Array] of instances of class CuitureComposition
+  #
+  # @param cultures [Array] of instances of class CultureComposition
   # @param collection [Collection] is an Aq item that is a collection of part items
   def associate_controls_to_collection(cultures:, collection:)
     collection_associations = AssociationMap.new(collection)
@@ -73,7 +75,7 @@ module HTCExperimentalDesign
     end
     return slice
   end
-  
+
   # Sort & arrange cultures into a given ObjectType's dimensions
   #
   # @param cultures [Array] of sorted arrays of culture composition hash objects 
@@ -162,12 +164,33 @@ module HighThroughputHelper
   
   # Determines what method to use for collection inoculation. Different methods when using different input object types. ie: Yeast Glycerol Stock vs. Yeast Plate
   def inoculate_culture_plates(new_output_collections:, inoculation_prep_hash:)
-    item_ids = []; media_ids = []
-    inoculation_prep_hash.each {|collection_id, item_media_hash| item_media_hash.each {|item_id, media_to_rc_list| item_ids.push(item_id); media_ids.push(media_to_rc_list.keys) } }
-    uniq_input_items = Item.find(item_ids.flatten.uniq); uniq_media_items = Item.find(media_ids.flatten.uniq)
-    input_item_hash = Hash.new();                        input_media_hash = Hash.new()
-    uniq_input_items.each {|item| input_item_hash[item.id] = item }; uniq_media_items.each {|item| input_media_hash[item.id] = item }
-    gather_materials(empty_containers: new_output_collections, transfer_required: false, new_materials: ["P1000 Multichannel Pipette", "Media Reservoir", "Aera Breathable Seals"], take_items: uniq_media_items)
+    item_ids = []
+    media_ids = []
+
+    inoculation_prep_hash.each do |collection_id, item_media_hash|
+      item_media_hash.each do |item_id, media_to_rc_list|
+        item_ids.push(item_id)
+        media_ids.push(media_to_rc_list.keys)
+      end
+    end
+
+
+    uniq_input_items = Item.find(item_ids.flatten.uniq)
+    uniq_media_items = Item.find(media_ids.flatten.uniq)
+
+    input_item_hash = Hash.new()
+    input_media_hash = Hash.new()
+
+    uniq_input_items.each {|item| input_item_hash[item.id] = item }
+    uniq_media_items.each {|item| input_media_hash[item.id] = item }
+
+    gather_materials(empty_containers: new_output_collections,
+                     transfer_required: false,
+                     new_materials: ["P1000 Multichannel Pipette", 
+                                     "Media Reservoir",
+                                     'Aera Breathable Seals'],
+                     take_items: uniq_media_items)
+
     uniq_input_items.group_by {|item| item.object_type.name }.each do |ot_name, items|
       case ot_name
       when 'Yeast Glycerol Stock', 'E coli Glycerol Stock', 'Yeast Overnight Suspension'
@@ -271,7 +294,7 @@ module HighThroughputHelper
             title "Inoculate #{collection} with Resuspended Inoculants"
             separator
             note "Follow the table below to transfer <b>#{SATURATION_CULT_VOL}#{MICROLITERS}</b> from a resuspended inoculant to the corresponding well."
-            bullet "The numbers are the table correspond to the labels on the resuspension tubes."
+            bullet "The numbers in the table correspond to the labels on the resuspension tubes."
             table highlight_alpha_rc(collection, rc_list) {|r,c| "#{tubeNum_hash[input_item_id][media_item_id]}"} 
           end
         end
@@ -464,6 +487,7 @@ module HighThroughputHelper
 
   # Gather materials. label if they are empty containers, display if they are materials are equiptement, and take items that are represented in Aq
   def gather_materials(empty_containers: [], transfer_required: false, new_materials: [], take_items: [])
+    label_disorganized_containers(empty_containers)
     new_materials = new_materials.select {|m| !Protocol.materials_list.include? m}
     if !empty_containers.empty? || !new_materials.empty?
       show do
@@ -479,7 +503,29 @@ module HighThroughputHelper
     take take_items, interactive: true unless take_items.length <= 0
     Protocol.materials_list.concat(new_materials).concat(empty_containers)
   end
-  
+
+  def label_disorganized_containers(containers)
+    containers.each do |container|
+      next unless container.object_type.name.upcase.include?('DISORGANIZED')
+
+      show do
+        title 'Retrieve and Label Test Tube Rack'
+        note 'Please retrieve the following'
+        check "Test tube rack labeled #{container.id}"
+        check "#{container.parts.length} test tubes"
+      end
+
+      show do
+        title 'Label Test Tubes'
+        note 'Please label test tubes with both rack location and rack id 
+                per the table below (e.g. A1-####):'
+        separator
+        note "Rack ID: #{container.id}"
+        table highlight_alpha_non_empty(container, check: false)
+      end
+    end
+  end
+
   # Allows for multiple key deeply nested hash[:item][:measurement][:day][:hour] = val
   def nested_hash_data_structure
     Hash.new { |hash, key| hash[key] = Hash.new(&hash.default_proc) }
