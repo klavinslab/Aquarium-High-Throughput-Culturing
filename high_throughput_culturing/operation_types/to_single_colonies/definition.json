@@ -1,0 +1,30 @@
+{
+  "id": 12,
+  "name": "To Single Colonies",
+  "parent_class": "OperationType",
+  "category": "High Throughput Culturing",
+  "inputs": [
+    {
+      "name": "Yeast Inoculum",
+      "part": false,
+      "array": false,
+      "routing": "C"
+    },
+    {
+      "name": "Media",
+      "part": false,
+      "array": false,
+      "routing": null
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Plate",
+      "part": false,
+      "array": false,
+      "routing": "C"
+    }
+  ],
+  "on_the_fly": false,
+  "user_id": 1
+}

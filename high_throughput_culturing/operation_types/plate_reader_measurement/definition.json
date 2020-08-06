@@ -1,0 +1,54 @@
+{
+  "id": 11,
+  "name": "Plate Reader Measurement",
+  "parent_class": "OperationType",
+  "category": "High Throughput Culturing",
+  "inputs": [
+    {
+      "name": "Culturing Plate",
+      "part": false,
+      "array": false,
+      "routing": "PR"
+    },
+    {
+      "name": "Media",
+      "part": false,
+      "array": false,
+      "routing": "M"
+    },
+    {
+      "name": "Type of Measurement(s)",
+      "part": false,
+      "array": false,
+      "routing": null
+    },
+    {
+      "name": "Dilution",
+      "part": false,
+      "array": false,
+      "routing": null
+    },
+    {
+      "name": "Keep Output Plate?",
+      "part": false,
+      "array": false,
+      "routing": null
+    },
+    {
+      "name": "When to Measure? (24hr)",
+      "part": false,
+      "array": false,
+      "routing": null
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Plate Reader Plate",
+      "part": false,
+      "array": false,
+      "routing": "PR"
+    }
+  ],
+  "on_the_fly": false,
+  "user_id": 1
+}

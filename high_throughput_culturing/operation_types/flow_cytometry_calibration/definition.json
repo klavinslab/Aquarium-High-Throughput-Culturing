@@ -1,0 +1,24 @@
+{
+  "id": 6,
+  "name": "Flow Cytometry Calibration",
+  "parent_class": "OperationType",
+  "category": "High Throughput Culturing",
+  "inputs": [
+    {
+      "name": "Optical Particles",
+      "part": false,
+      "array": false,
+      "routing": "OP"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Diluted Beads",
+      "part": false,
+      "array": false,
+      "routing": "OP"
+    }
+  ],
+  "on_the_fly": false,
+  "user_id": 1
+}
