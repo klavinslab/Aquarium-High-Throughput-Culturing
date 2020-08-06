@@ -1,0 +1,60 @@
+{
+  "id": 3,
+  "name": "Define Culture Conditions",
+  "parent_class": "OperationType",
+  "category": "High Throughput Culturing",
+  "inputs": [
+    {
+      "name": "Strain",
+      "part": false,
+      "array": false,
+      "routing": "CC"
+    },
+    {
+      "name": "Inducer(s)",
+      "part": false,
+      "array": false,
+      "routing": null
+    },
+    {
+      "name": "Replicates",
+      "part": false,
+      "array": false,
+      "routing": null
+    },
+    {
+      "name": "Control Tag",
+      "part": false,
+      "array": false,
+      "routing": null
+    },
+    {
+      "name": "Media",
+      "part": false,
+      "array": false,
+      "routing": "M"
+    },
+    {
+      "name": "Antibiotic(s)",
+      "part": false,
+      "array": false,
+      "routing": null
+    },
+    {
+      "name": "Option(s)",
+      "part": false,
+      "array": false,
+      "routing": null
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Culture Condition",
+      "part": false,
+      "array": false,
+      "routing": "CC"
+    }
+  ],
+  "on_the_fly": false,
+  "user_id": 1
+}

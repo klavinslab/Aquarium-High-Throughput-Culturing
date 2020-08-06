@@ -1,0 +1,42 @@
+{
+  "id": 7,
+  "name": "Flow Cytometry Measurement",
+  "parent_class": "OperationType",
+  "category": "High Throughput Culturing",
+  "inputs": [
+    {
+      "name": "Experimental Plate",
+      "part": false,
+      "array": false,
+      "routing": "P"
+    },
+    {
+      "name": "Calibration Required?",
+      "part": false,
+      "array": false,
+      "routing": null
+    },
+    {
+      "name": "Keep Output Plate?",
+      "part": false,
+      "array": false,
+      "routing": null
+    },
+    {
+      "name": "When to Measure? (24hr)",
+      "part": false,
+      "array": false,
+      "routing": null
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Measurement Plate",
+      "part": false,
+      "array": false,
+      "routing": "P"
+    }
+  ],
+  "on_the_fly": false,
+  "user_id": 1
+}

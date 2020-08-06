@@ -1,0 +1,30 @@
+{
+  "id": 2,
+  "name": "Apply Experimental Condition",
+  "parent_class": "OperationType",
+  "category": "High Throughput Culturing",
+  "inputs": [
+    {
+      "name": "Culture Plate",
+      "part": false,
+      "array": true,
+      "routing": "P"
+    },
+    {
+      "name": "Experimental Condition",
+      "part": false,
+      "array": false,
+      "routing": null
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Experimental Plate",
+      "part": false,
+      "array": true,
+      "routing": "P"
+    }
+  ],
+  "on_the_fly": false,
+  "user_id": 1
+}

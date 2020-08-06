@@ -1,0 +1,36 @@
+{
+  "id": 5,
+  "name": "Experimental Recovery",
+  "parent_class": "OperationType",
+  "category": "High Throughput Culturing",
+  "inputs": [
+    {
+      "name": "Culture Plate",
+      "part": false,
+      "array": true,
+      "routing": "P"
+    },
+    {
+      "name": "Dilution",
+      "part": false,
+      "array": false,
+      "routing": null
+    },
+    {
+      "name": "When to recover? (24hr)",
+      "part": false,
+      "array": false,
+      "routing": null
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Diluted Plate",
+      "part": false,
+      "array": true,
+      "routing": "P"
+    }
+  ],
+  "on_the_fly": false,
+  "user_id": 1
+}

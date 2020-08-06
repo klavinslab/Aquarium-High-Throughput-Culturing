@@ -1,0 +1,7 @@
+{
+  "id": 32,
+  "name": "FlowCytometryCalibration",
+  "parent_class": "Library",
+  "category": "High Throughput Culturing",
+  "user_id": 1
+}

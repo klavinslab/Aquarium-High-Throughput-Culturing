@@ -1,0 +1,1 @@
+This protocol will guide you in streaking out cells onto an agar plate in order to generated isolated colonies.

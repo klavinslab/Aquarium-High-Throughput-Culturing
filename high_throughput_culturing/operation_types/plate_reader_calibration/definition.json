@@ -1,0 +1,30 @@
+{
+  "id": 10,
+  "name": "Plate Reader Calibration",
+  "parent_class": "OperationType",
+  "category": "High Throughput Culturing",
+  "inputs": [
+    {
+      "name": "Optical Particles",
+      "part": false,
+      "array": false,
+      "routing": "OP"
+    },
+    {
+      "name": "Fluorescent Salt",
+      "part": false,
+      "array": false,
+      "routing": "FS"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Calibration Plate",
+      "part": false,
+      "array": false,
+      "routing": "PR"
+    }
+  ],
+  "on_the_fly": false,
+  "user_id": 1
+}
